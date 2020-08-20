@@ -1,0 +1,267 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>元祖和字典 | 斯人若彩虹，遇上方知有</title><meta name="description" content="元祖元祖介绍 tuple   12(&amp;#x27;name1&amp;#x27;,&amp;#x27;sansan&amp;#x27;)(1,2,3,4)   元祖是一个不可变序列（一般当我们希望数据不改变时，我们使用元祖，其他情况下用列表） 使用（）创建 元祖不是空元祖，至少有一个逗号（，）当元祖不是空元祖时括号可以省略  1234567a &#x3D; 9b &#x3D; 9,c &#x3D; (9)d &#x3D; (9,)print(type(a),ty"><meta name="keywords" content="元祖,字典,Python学习"><meta name="author" content="三三不得酒吖"><meta name="copyright" content="三三不得酒吖"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/cat.png"><link rel="canonical" href="https://yinshaoxuan.github.io/2020/08/20/dict/"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin="crossorigin"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta property="og:type" content="article"><meta property="og:title" content="元祖和字典"><meta property="og:url" content="https://yinshaoxuan.github.io/2020/08/20/dict/"><meta property="og:site_name" content="斯人若彩虹，遇上方知有"><meta property="og:description" content="元祖元祖介绍 tuple   12(&amp;#x27;name1&amp;#x27;,&amp;#x27;sansan&amp;#x27;)(1,2,3,4)   元祖是一个不可变序列（一般当我们希望数据不改变时，我们使用元祖，其他情况下用列表） 使用（）创建 元祖不是空元祖，至少有一个逗号（，）当元祖不是空元祖时括号可以省略  1234567a &#x3D; 9b &#x3D; 9,c &#x3D; (9)d &#x3D; (9,)print(type(a),ty"><meta property="og:image" content="https://s1.ax1x.com/2020/08/11/aO5rBq.jpg"><meta property="article:published_time" content="2020-08-20T13:43:11.000Z"><meta property="article:modified_time" content="2020-08-20T14:50:16.622Z"><meta name="twitter:card" content="summary"><script>var activateDarkMode = function () {
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#000')
+  }
+}
+var activateLightMode = function () {
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#fff')
+  }
+}
+
+var getCookies = function (name) {
+  const value = `; ${document.cookie}`
+  const parts = value.split(`; ${name}=`)
+  if (parts.length === 2) return parts.pop().split(';').shift()
+}
+
+var autoChangeMode = 'false'
+var t = getCookies('theme')
+if (autoChangeMode === '1') {
+  var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+  var isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+  var isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined) {
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport) {
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour <= 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+    }
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+      if (Cookies.get('theme') === undefined) {
+        e.matches ? activateDarkMode() : activateLightMode()
+      }
+    })
+  } else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else if (autoChangeMode === '2') {
+  now = new Date()
+  hour = now.getHours()
+  isNight = hour <= 6 || hour >= 18
+  if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else {
+  if (t === 'dark') activateDarkMode()
+  else if (t === 'light') activateLightMode()
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: false,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isanchor: false    
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2020-08-20 22:50:16'
+}</script><noscript><style>
+#nav {
+  opacity: 1
+}
+.justified-gallery img {
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 5.0.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" data-lazy-src="/img/cat.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">11</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">12</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">2</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%83%E7%A5%96"><span class="toc-number">1.</span> <span class="toc-text">元祖</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%83%E7%A5%96%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.1.</span> <span class="toc-text">元祖介绍</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E5%85%B8"><span class="toc-number">2.</span> <span class="toc-text">字典</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E5%85%B8%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.1.</span> <span class="toc-text">字典基本介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E5%85%B8%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">2.2.</span> <span class="toc-text">字典的使用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%B1%E6%8B%B7%E8%B4%9D%E4%B8%8E%E6%B5%85%E6%8B%B7%E8%B4%9D"><span class="toc-number">3.</span> <span class="toc-text">深拷贝与浅拷贝</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%85%E6%8B%B7%E8%B4%9D"><span class="toc-number">3.1.</span> <span class="toc-text">浅拷贝</span></a></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://s1.ax1x.com/2020/08/11/aO5rBq.jpg)"><nav id="nav"><span class="pull-left" id="blog_name"><a class="blog_title" id="site-name" href="/">斯人若彩虹，遇上方知有</a></span><span class="pull-right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div></div><span class="toggle-menu close"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">元祖和字典</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-08-20T13:43:11.000Z" title="发表于 2020-08-20 21:43:11">2020-08-20</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-08-20T14:50:16.622Z" title="更新于 2020-08-20 22:50:16">2020-08-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Python/">Python</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2020/08/20/dict/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count comment-count" data-xid="/2020/08/20/dict/" itemprop="commentCount"></span></a></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h2 id="元祖"><a href="#元祖" class="headerlink" title="元祖"></a>元祖</h2><h3 id="元祖介绍"><a href="#元祖介绍" class="headerlink" title="元祖介绍"></a>元祖介绍</h3><ul>
+<li>tuple </li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(<span class="string">&#x27;name1&#x27;</span>,<span class="string">&#x27;sansan&#x27;</span>)</span><br><span class="line">(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>元祖是一个不可变序列（一般当我们希望数据不改变时，我们使用元祖，其他情况下用列表）</li>
+<li>使用（）创建</li>
+<li>元祖不是空元祖，至少有一个逗号（，）当元祖不是空元祖时括号可以省略</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="number">9</span></span><br><span class="line">b = <span class="number">9</span>,</span><br><span class="line">c = (<span class="number">9</span>)</span><br><span class="line">d = (<span class="number">9</span>,)</span><br><span class="line">print(type(a),type(b),type(c),type(d))</span><br><span class="line"></span><br><span class="line">&lt;<span class="class"><span class="keyword">class</span> &#x27;<span class="title">int</span>&#x27;&gt; &lt;<span class="title">class</span> &#x27;<span class="title">tuple</span>&#x27;&gt; &lt;<span class="title">class</span> &#x27;<span class="title">int</span>&#x27;&gt; &lt;<span class="title">class</span> &#x27;<span class="title">tuple</span>&#x27;&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>元祖解包是指将元祖当中的每一个元素都赋值给一个变量</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a,b,*c=(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>)</span><br><span class="line">print(a,b,c)</span><br><span class="line"></span><br><span class="line"><span class="number">1</span> <span class="number">2</span> [<span class="number">3</span>, <span class="number">4</span>]</span><br></pre></td></tr></table></figure>
+
+<h2 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h2><h3 id="字典基本介绍"><a href="#字典基本介绍" class="headerlink" title="字典基本介绍"></a>字典基本介绍</h3><ul>
+<li>属于一种新的数据结构成为映射（mapping）</li>
+<li>作用与列表相似，都是储存对象的容器</li>
+<li>列表储存数据性能好，但是查询数据性能差，字典正好相反</li>
+<li>在字典中每一个value都有唯一的key，可以通过key找到value</li>
+<li>字典也称为键值对（key-value）结构</li>
+<li>每个字典都可以有多个键值对，每个键值我们称其为一项（item）</li>
+<li>创建一个有数据的字典语法key:value}</li>
+<li>字典的值可以使任意对象，字典的键可以使任意不可变对象</li>
+<li>字典的键不可重复，如果重复的后面的会代替前面</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a = &#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;123&quot;</span>,<span class="string">&quot;data&quot;</span>:&#123;<span class="string">&quot;result&quot;</span>:[&#123;<span class="string">&quot;src&quot;</span>:<span class="string">&quot;python1&quot;</span>&#125;,&#123;<span class="string">&quot;src&quot;</span>:<span class="string">&quot;python2&quot;</span>&#125;,&#123;<span class="string">&quot;src&quot;</span>:<span class="string">&quot;python3&quot;</span>&#125;]&#125;&#125; <span class="comment">#是一个字典</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a = &#123;<span class="string">&#x27;b&#x27;</span>:<span class="string">&#x27;c&#x27;</span>,<span class="string">&#x27;d&#x27;</span>:<span class="string">&#x27;e&#x27;</span>,<span class="string">&#x27;b&#x27;</span>:<span class="string">&#x27;f&#x27;</span>&#125;</span><br><span class="line">print(a)</span><br><span class="line"></span><br><span class="line">&#123;<span class="string">&#x27;b&#x27;</span>: <span class="string">&#x27;f&#x27;</span>, <span class="string">&#x27;d&#x27;</span>: <span class="string">&#x27;e&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="字典的使用"><a href="#字典的使用" class="headerlink" title="字典的使用"></a>字典的使用</h3><ul>
+<li>可以使用dict函数来创建字典，dict函数可以将一个双值子序列转换为字典</li>
+<li>双值序列：序列中有两个值[1,2] (‘a’,’b’) ‘ab’</li>
+<li>子序列：序列中的元素也是序列  我们称这个元素为子序列[(1,2)]</li>
+<li>双值子序列：[(‘a’,’b’),(‘name’,’guojing’)]</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">z = dict([(<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;三三&#x27;</span>),(<span class="string">&#x27;b&#x27;</span>,<span class="string">&#x27;不&#x27;</span>)])</span><br><span class="line">print(z)</span><br><span class="line">print(len(z))</span><br><span class="line"></span><br><span class="line">&#123;<span class="string">&#x27;a&#x27;</span>: <span class="string">&#x27;三三&#x27;</span>, <span class="string">&#x27;b&#x27;</span>: <span class="string">&#x27;不&#x27;</span>&#125;</span><br><span class="line"><span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>可以用in 或 not in 判断key是否存在</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">z = dict([(<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;三三&#x27;</span>),(<span class="string">&#x27;b&#x27;</span>,<span class="string">&#x27;不&#x27;</span>)])</span><br><span class="line">print(<span class="string">&#x27;a&#x27;</span> <span class="keyword">in</span> z)</span><br><span class="line"></span><br><span class="line"><span class="literal">True</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>可以用dictp[]来取value</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">z = dict([(<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;三三&#x27;</span>),(<span class="string">&#x27;b&#x27;</span>,<span class="string">&#x27;不&#x27;</span>)])</span><br><span class="line">print(z[<span class="string">&#x27;a&#x27;</span>])</span><br><span class="line"></span><br><span class="line">三三</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>可以用dict.get(key,default）如果没有这个key返回None不会报错，也可以设定默认值，获取不到key返回默认值</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">z = dict([(<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;三三&#x27;</span>),(<span class="string">&#x27;b&#x27;</span>,<span class="string">&#x27;不&#x27;</span>)])</span><br><span class="line">print(z.get(<span class="string">&#x27;b&#x27;</span>))</span><br><span class="line">print(z.get(<span class="string">&#x27;hello&#x27;</span>,<span class="string">&#x27;没有这个值&#x27;</span>))</span><br><span class="line">s = z.get(<span class="string">&#x27;hello&#x27;</span>,<span class="string">&#x27;没有这个值&#x27;</span>)</span><br><span class="line">print(s)</span><br><span class="line"></span><br><span class="line">不</span><br><span class="line">没有这个值</span><br><span class="line">没有这个值</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>修改以及添加</p>
+<ul>
+<li><p>dict[‘key’] = value 可以修改字典，如果没有这个值，则将键值对添加至字典</p>
+</li>
+<li><ul>
+<li></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">z = dict([(<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;三三&#x27;</span>),(<span class="string">&#x27;b&#x27;</span>,<span class="string">&#x27;不&#x27;</span>)])</span><br><span class="line">z[<span class="string">&#x27;b&#x27;</span>] = <span class="string">&#x27;不得&#x27;</span></span><br><span class="line"><span class="keyword">print</span>[z]</span><br><span class="line"></span><br><span class="line">&#123;<span class="string">&#x27;a&#x27;</span>: <span class="string">&#x27;三三&#x27;</span>, <span class="string">&#x27;b&#x27;</span>: <span class="string">&#x27;不得&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">z = dict([(<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;三三&#x27;</span>),(<span class="string">&#x27;b&#x27;</span>,<span class="string">&#x27;不&#x27;</span>)])</span><br><span class="line">z[<span class="string">&#x27;c&#x27;</span>] = <span class="string">&#x27;得&#x27;</span></span><br><span class="line"><span class="keyword">print</span>[z]</span><br><span class="line"></span><br><span class="line">&#123;<span class="string">&#x27;a&#x27;</span>: <span class="string">&#x27;三三&#x27;</span>, <span class="string">&#x27;b&#x27;</span>: <span class="string">&#x27;不&#x27;</span>, <span class="string">&#x27;c&#x27;</span>: <span class="string">&#x27;得&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>dict.setdefault[key,default] 也可以添加键值对，但如果key已经存在，则会返回value</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">z = dict([(<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;三三&#x27;</span>),(<span class="string">&#x27;b&#x27;</span>,<span class="string">&#x27;不&#x27;</span>),(<span class="string">&#x27;c&#x27;</span>,<span class="string">&#x27;得&#x27;</span>)])</span><br><span class="line">z.setdefault(<span class="string">&#x27;d&#x27;</span>,<span class="string">&#x27;酒&#x27;</span>)</span><br><span class="line">print(z)</span><br><span class="line"></span><br><span class="line">&#123;<span class="string">&#x27;a&#x27;</span>: <span class="string">&#x27;三三&#x27;</span>, <span class="string">&#x27;b&#x27;</span>: <span class="string">&#x27;不&#x27;</span>, <span class="string">&#x27;c&#x27;</span>: <span class="string">&#x27;得&#x27;</span>, <span class="string">&#x27;d&#x27;</span>: <span class="string">&#x27;酒&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">z = dict([(<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;三三&#x27;</span>),(<span class="string">&#x27;b&#x27;</span>,<span class="string">&#x27;不&#x27;</span>),(<span class="string">&#x27;c&#x27;</span>,<span class="string">&#x27;得&#x27;</span>)])</span><br><span class="line">z.setdefault(<span class="string">&#x27;d&#x27;</span>,<span class="string">&#x27;酒&#x27;</span>)</span><br><span class="line">print(z)</span><br><span class="line">s = z.setdefault(<span class="string">&#x27;d&#x27;</span>,<span class="string">&#x27;酒啊&#x27;</span>)</span><br><span class="line">print(s)</span><br><span class="line"></span><br><span class="line">&#123;<span class="string">&#x27;a&#x27;</span>: <span class="string">&#x27;三三&#x27;</span>, <span class="string">&#x27;b&#x27;</span>: <span class="string">&#x27;不&#x27;</span>, <span class="string">&#x27;c&#x27;</span>: <span class="string">&#x27;得&#x27;</span>, <span class="string">&#x27;d&#x27;</span>: <span class="string">&#x27;酒&#x27;</span>&#125;</span><br><span class="line">酒</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li>dict.update() 可以将其他字典添加至dict</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">z = dict([(<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;三三&#x27;</span>),(<span class="string">&#x27;b&#x27;</span>,<span class="string">&#x27;不&#x27;</span>),(<span class="string">&#x27;c&#x27;</span>,<span class="string">&#x27;得&#x27;</span>),(<span class="string">&#x27;d&#x27;</span>,<span class="string">&#x27;酒&#x27;</span>)])</span><br><span class="line">x = &#123;<span class="string">&#x27;e&#x27;</span>:<span class="string">&#x27;啊&#x27;</span>&#125;</span><br><span class="line">z.update(x)</span><br><span class="line">print(z)</span><br><span class="line"></span><br><span class="line">&#123;<span class="string">&#x27;a&#x27;</span>: <span class="string">&#x27;三三&#x27;</span>, <span class="string">&#x27;b&#x27;</span>: <span class="string">&#x27;不&#x27;</span>, <span class="string">&#x27;c&#x27;</span>: <span class="string">&#x27;得&#x27;</span>, <span class="string">&#x27;d&#x27;</span>: <span class="string">&#x27;酒&#x27;</span>, <span class="string">&#x27;e&#x27;</span>: <span class="string">&#x27;啊&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>删除</p>
+<ul>
+<li>del 删除字典中key对应的键值对</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">z = dict([(<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;三三&#x27;</span>),(<span class="string">&#x27;b&#x27;</span>,<span class="string">&#x27;不&#x27;</span>),(<span class="string">&#x27;c&#x27;</span>,<span class="string">&#x27;得&#x27;</span>),(<span class="string">&#x27;d&#x27;</span>,<span class="string">&#x27;酒&#x27;</span>),(<span class="string">&#x27;e&#x27;</span>,<span class="string">&#x27;啊&#x27;</span>)])</span><br><span class="line"><span class="keyword">del</span> z[<span class="string">&#x27;e&#x27;</span>]</span><br><span class="line">print(z)</span><br><span class="line"></span><br><span class="line">&#123;<span class="string">&#x27;a&#x27;</span>: <span class="string">&#x27;三三&#x27;</span>, <span class="string">&#x27;b&#x27;</span>: <span class="string">&#x27;不&#x27;</span>, <span class="string">&#x27;c&#x27;</span>: <span class="string">&#x27;得&#x27;</span>, <span class="string">&#x27;d&#x27;</span>: <span class="string">&#x27;酒&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>随机删除 dict.popitem() 一般会删除最后一项</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">z = dict([(<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;三三&#x27;</span>),(<span class="string">&#x27;b&#x27;</span>,<span class="string">&#x27;不&#x27;</span>),(<span class="string">&#x27;c&#x27;</span>,<span class="string">&#x27;得&#x27;</span>),(<span class="string">&#x27;d&#x27;</span>,<span class="string">&#x27;酒&#x27;</span>)])</span><br><span class="line">z.popitem()</span><br><span class="line">print(z)</span><br><span class="line"></span><br><span class="line">&#123;<span class="string">&#x27;a&#x27;</span>: <span class="string">&#x27;三三&#x27;</span>, <span class="string">&#x27;b&#x27;</span>: <span class="string">&#x27;不&#x27;</span>, <span class="string">&#x27;c&#x27;</span>: <span class="string">&#x27;得&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>指定删除dict.pop(key,default) 删除key的键值对，若无key则返回default</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">z = dict([(<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;三三&#x27;</span>),(<span class="string">&#x27;b&#x27;</span>,<span class="string">&#x27;不&#x27;</span>),(<span class="string">&#x27;c&#x27;</span>,<span class="string">&#x27;得&#x27;</span>)])</span><br><span class="line">f = z .pop(<span class="string">&#x27;f&#x27;</span>,<span class="string">&#x27;18&#x27;</span>)</span><br><span class="line">print(z)</span><br><span class="line">print(f)</span><br><span class="line"></span><br><span class="line">&#123;<span class="string">&#x27;a&#x27;</span>: <span class="string">&#x27;三三&#x27;</span>, <span class="string">&#x27;b&#x27;</span>: <span class="string">&#x27;不&#x27;</span>, <span class="string">&#x27;c&#x27;</span>: <span class="string">&#x27;得&#x27;</span>&#125;</span><br><span class="line"><span class="number">18</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="深拷贝与浅拷贝"><a href="#深拷贝与浅拷贝" class="headerlink" title="深拷贝与浅拷贝"></a>深拷贝与浅拷贝</h2><h3 id="浅拷贝"><a href="#浅拷贝" class="headerlink" title="浅拷贝"></a>浅拷贝</h3></li>
+<li><p>赋值相当于一个引用</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a = &#123;<span class="string">&#x27;a&#x27;</span>:<span class="string">&#x27;三三&#x27;</span>,<span class="string">&#x27;b&#x27;</span>:<span class="string">&#x27;不&#x27;</span>&#125;</span><br><span class="line">b = a</span><br><span class="line">print(id(b),id(a))</span><br><span class="line"></span><br><span class="line"><span class="number">2211443731192</span> <span class="number">2211443731192</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>浅拷贝以后的对象和原对象相互独立，不影响另一个对象</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a = &#123;<span class="string">&#x27;a&#x27;</span>:<span class="string">&#x27;三三&#x27;</span>,<span class="string">&#x27;b&#x27;</span>:<span class="string">&#x27;不&#x27;</span>&#125;</span><br><span class="line">b = a.copy()</span><br><span class="line">print(id(b),id(a))</span><br><span class="line"></span><br><span class="line"><span class="number">1788152343360</span> <span class="number">1788152343288</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> copy   <span class="comment">#使用模块</span></span><br><span class="line">a = &#123;<span class="string">&#x27;a&#x27;</span>:<span class="string">&#x27;三三&#x27;</span>,<span class="string">&#x27;b&#x27;</span>:<span class="string">&#x27;不&#x27;</span>&#125;</span><br><span class="line">b = copy.copy(a)</span><br><span class="line">print(id(b),id(a))</span><br><span class="line"></span><br><span class="line"><span class="number">2201703181120</span> <span class="number">2201703181048</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>深拷贝也会改变地址，拷贝就会改变地址</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> copy</span><br><span class="line">a = &#123;<span class="string">&#x27;a&#x27;</span>:<span class="string">&#x27;三三&#x27;</span>,<span class="string">&#x27;b&#x27;</span>:<span class="string">&#x27;不&#x27;</span>,<span class="string">&#x27;c&#x27;</span>:&#123;<span class="string">&#x27;d&#x27;</span>:<span class="string">&#x27;酒&#x27;</span>,<span class="string">&#x27;e&#x27;</span>:<span class="string">&#x27;啊&#x27;</span>&#125;&#125;</span><br><span class="line">b = copy.deepcopy(a)</span><br><span class="line">print(id(b),id(a))</span><br><span class="line"></span><br><span class="line"><span class="number">2778718918552</span> <span class="number">2778718038848</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> copy</span><br><span class="line">a = &#123;<span class="string">&#x27;a&#x27;</span>:<span class="string">&#x27;三三&#x27;</span>,<span class="string">&#x27;b&#x27;</span>:<span class="string">&#x27;不&#x27;</span>,<span class="string">&#x27;c&#x27;</span>:&#123;<span class="string">&#x27;d&#x27;</span>:<span class="string">&#x27;得&#x27;</span>,<span class="string">&#x27;e&#x27;</span>:<span class="string">&#x27;酒&#x27;</span>&#125;&#125;</span><br><span class="line">b = copy.deepcopy(a)</span><br><span class="line">print(a)</span><br><span class="line">print(b)</span><br><span class="line"></span><br><span class="line">&#123;<span class="string">&#x27;a&#x27;</span>: <span class="string">&#x27;三三&#x27;</span>, <span class="string">&#x27;b&#x27;</span>: <span class="string">&#x27;不&#x27;</span>, <span class="string">&#x27;c&#x27;</span>: &#123;<span class="string">&#x27;d&#x27;</span>: <span class="string">&#x27;得&#x27;</span>, <span class="string">&#x27;e&#x27;</span>: <span class="string">&#x27;酒&#x27;</span>&#125;&#125;</span><br><span class="line">&#123;<span class="string">&#x27;a&#x27;</span>: <span class="string">&#x27;三三&#x27;</span>, <span class="string">&#x27;b&#x27;</span>: <span class="string">&#x27;不&#x27;</span>, <span class="string">&#x27;c&#x27;</span>: &#123;<span class="string">&#x27;d&#x27;</span>: <span class="string">&#x27;得&#x27;</span>, <span class="string">&#x27;e&#x27;</span>: <span class="string">&#x27;酒&#x27;</span>&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>改变value做深拷贝，内部id也进行拷贝</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> copy</span><br><span class="line">a = &#123;<span class="string">&#x27;a&#x27;</span>:<span class="string">&#x27;三三&#x27;</span>,<span class="string">&#x27;b&#x27;</span>:<span class="string">&#x27;不&#x27;</span>,<span class="string">&#x27;c&#x27;</span>:&#123;<span class="string">&#x27;d&#x27;</span>:<span class="string">&#x27;得&#x27;</span>,<span class="string">&#x27;e&#x27;</span>:<span class="string">&#x27;酒&#x27;</span>&#125;&#125;</span><br><span class="line">b = copy.deepcopy(a)</span><br><span class="line">a[<span class="string">&#x27;c&#x27;</span>][<span class="string">&#x27;e&#x27;</span>] = <span class="string">&#x27;酒啊&#x27;</span></span><br><span class="line">print(a)</span><br><span class="line">print(b)</span><br><span class="line"></span><br><span class="line">&#123;<span class="string">&#x27;a&#x27;</span>: <span class="string">&#x27;三三&#x27;</span>, <span class="string">&#x27;b&#x27;</span>: <span class="string">&#x27;不&#x27;</span>, <span class="string">&#x27;c&#x27;</span>: &#123;<span class="string">&#x27;d&#x27;</span>: <span class="string">&#x27;得&#x27;</span>, <span class="string">&#x27;e&#x27;</span>: <span class="string">&#x27;酒啊&#x27;</span>&#125;&#125;</span><br><span class="line">&#123;<span class="string">&#x27;a&#x27;</span>: <span class="string">&#x27;三三&#x27;</span>, <span class="string">&#x27;b&#x27;</span>: <span class="string">&#x27;不&#x27;</span>, <span class="string">&#x27;c&#x27;</span>: &#123;<span class="string">&#x27;d&#x27;</span>: <span class="string">&#x27;得&#x27;</span>, <span class="string">&#x27;e&#x27;</span>: <span class="string">&#x27;酒&#x27;</span>&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>改变value做浅拷贝,浅拷贝只能拷贝最外层地址，内层id无法拷贝,相当于赋值</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> copy</span><br><span class="line">a = &#123;<span class="string">&#x27;a&#x27;</span>:<span class="string">&#x27;三三&#x27;</span>,<span class="string">&#x27;b&#x27;</span>:<span class="string">&#x27;不&#x27;</span>,<span class="string">&#x27;c&#x27;</span>:&#123;<span class="string">&#x27;d&#x27;</span>:<span class="string">&#x27;得&#x27;</span>,<span class="string">&#x27;e&#x27;</span>:<span class="string">&#x27;酒&#x27;</span>&#125;&#125;</span><br><span class="line">b = copy.copy(a)</span><br><span class="line">a[<span class="string">&#x27;c&#x27;</span>][<span class="string">&#x27;e&#x27;</span>] = <span class="string">&#x27;酒啊&#x27;</span></span><br><span class="line">print(a)</span><br><span class="line">print(b)</span><br><span class="line"></span><br><span class="line">&#123;<span class="string">&#x27;a&#x27;</span>: <span class="string">&#x27;三三&#x27;</span>, <span class="string">&#x27;b&#x27;</span>: <span class="string">&#x27;不&#x27;</span>, <span class="string">&#x27;c&#x27;</span>: &#123;<span class="string">&#x27;d&#x27;</span>: <span class="string">&#x27;得&#x27;</span>, <span class="string">&#x27;e&#x27;</span>: <span class="string">&#x27;酒啊&#x27;</span>&#125;&#125;</span><br><span class="line">&#123;<span class="string">&#x27;a&#x27;</span>: <span class="string">&#x27;三三&#x27;</span>, <span class="string">&#x27;b&#x27;</span>: <span class="string">&#x27;不&#x27;</span>, <span class="string">&#x27;c&#x27;</span>: &#123;<span class="string">&#x27;d&#x27;</span>: <span class="string">&#x27;得&#x27;</span>, <span class="string">&#x27;e&#x27;</span>: <span class="string">&#x27;酒啊&#x27;</span>&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<p>​    </p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">三三不得酒吖</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://yinshaoxuan.github.io/2020/08/20/dict/">https://yinshaoxuan.github.io/2020/08/20/dict/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://yinshaoxuan.github.io" target="_blank">斯人若彩虹，遇上方知有</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%85%83%E7%A5%96/">元祖</a><a class="post-meta__tags" href="/tags/%E5%AD%97%E5%85%B8/">字典</a><a class="post-meta__tags" href="/tags/Python%E5%AD%A6%E4%B9%A0/">Python学习</a></div><div class="post_share"><div class="social-share" data-image="https://s1.ax1x.com/2020/08/11/aO5rBq.jpg" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2020/08/18/work4/"><img class="next-cover" data-lazy-src="https://s1.ax1x.com/2020/08/11/aO5rBq.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">反转列表与列表取同</div></div></a></div></nav><div class="relatedPosts"><div class="relatedPosts_headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts_list"><div class="relatedPosts_item"><a href="/2020/08/16/if-and-while/" title="条件控制语句"><img class="relatedPosts_cover" data-lazy-src="https://s1.ax1x.com/2020/08/11/aO5rBq.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2020-08-16</div><div class="relatedPosts_title">条件控制语句</div></div></a></div><div class="relatedPosts_item"><a href="/2020/08/18/list/" title="列表"><img class="relatedPosts_cover" data-lazy-src="https://s1.ax1x.com/2020/08/11/aO5rBq.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2020-08-18</div><div class="relatedPosts_title">列表</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></article></main><footer id="footer" style="background-image: url(https://s1.ax1x.com/2020/08/11/aO5rBq.jpg)" data-type="photo"><div id="footer-wrap"><div class="copyright">&copy;2020 By 三三不得酒吖</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font_plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font_minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module" defer></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js" async></script><script>var endLoading = function () {
+  document.body.style.overflow = 'auto';
+  document.getElementById('loading-box').classList.add("loaded")
+}
+window.addEventListener('load',endLoading)</script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    window.valine = new Valine({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+    });
+    if ('nick,mail') { valine.config.requiredFields= 'nick,mail'.split(',') }
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else $.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) loadComment(document.querySelector('#vcomment'),loadValine)
+  else setTimeout(() => loadValine(), 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><canvas class="fireworks"></canvas><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="/js/third-party/fireworks.js"></script></div></body></html>
