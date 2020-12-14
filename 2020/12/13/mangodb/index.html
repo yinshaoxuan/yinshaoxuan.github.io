@@ -1,0 +1,337 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MangoDB | 斯人若彩虹，遇上方知有</title><meta name="description" content="MangoDBSQL与NoSQL区别 在SQL中层级关系:数据库-&gt;表-&gt;数据 在NoSQL中是:数据库-&gt;集合-&gt;文档  MongoDB优势 无数据结构限制 没有表结构的概念，每条记录可以有完全不同的结构 业务开发方便快捷   大数据量和高性能 nosql数据库都具有非常高的读写性能，尤其在大数量下表现优秀   良好的支持 完善的文档 齐全的驱动支持    MongoDB"><meta name="keywords" content="MangoDB,数据库"><meta name="author" content="三三不得酒吖"><meta name="copyright" content="三三不得酒吖"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/cat.png"><link rel="canonical" href="https://yinshaoxuan.github.io/2020/12/13/mangodb/"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin="crossorigin"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta property="og:type" content="article"><meta property="og:title" content="MangoDB"><meta property="og:url" content="https://yinshaoxuan.github.io/2020/12/13/mangodb/"><meta property="og:site_name" content="斯人若彩虹，遇上方知有"><meta property="og:description" content="MangoDBSQL与NoSQL区别 在SQL中层级关系:数据库-&gt;表-&gt;数据 在NoSQL中是:数据库-&gt;集合-&gt;文档  MongoDB优势 无数据结构限制 没有表结构的概念，每条记录可以有完全不同的结构 业务开发方便快捷   大数据量和高性能 nosql数据库都具有非常高的读写性能，尤其在大数量下表现优秀   良好的支持 完善的文档 齐全的驱动支持    MongoDB"><meta property="og:image" content="https://s1.ax1x.com/2020/08/11/aO5rBq.jpg"><meta property="article:published_time" content="2020-12-13T14:07:52.000Z"><meta property="article:modified_time" content="2020-12-14T13:45:39.286Z"><meta name="twitter:card" content="summary"><script>var activateDarkMode = function () {
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#000')
+  }
+}
+var activateLightMode = function () {
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#fff')
+  }
+}
+
+var getCookies = function (name) {
+  const value = `; ${document.cookie}`
+  const parts = value.split(`; ${name}=`)
+  if (parts.length === 2) return parts.pop().split(';').shift()
+}
+
+var autoChangeMode = 'false'
+var t = getCookies('theme')
+if (autoChangeMode === '1') {
+  var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+  var isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+  var isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined) {
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport) {
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour <= 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+    }
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+      if (Cookies.get('theme') === undefined) {
+        e.matches ? activateDarkMode() : activateLightMode()
+      }
+    })
+  } else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else if (autoChangeMode === '2') {
+  now = new Date()
+  hour = now.getHours()
+  isNight = hour <= 6 || hour >= 18
+  if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else {
+  if (t === 'dark') activateDarkMode()
+  else if (t === 'light') activateLightMode()
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: false,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isanchor: false    
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2020-12-14 21:45:39'
+}</script><noscript><style>
+#nav {
+  opacity: 1
+}
+.justified-gallery img {
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 5.0.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" data-lazy-src="/img/cat.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">36</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">48</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">1</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#MangoDB"><span class="toc-number">1.</span> <span class="toc-text">MangoDB</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SQL%E4%B8%8ENoSQL%E5%8C%BA%E5%88%AB"><span class="toc-number">1.1.</span> <span class="toc-text">SQL与NoSQL区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MongoDB%E4%BC%98%E5%8A%BF"><span class="toc-number">1.2.</span> <span class="toc-text">MongoDB优势</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MongoDB-Windows%E5%AE%89%E8%A3%85%E4%B8%8E%E8%BF%90%E8%A1%8C"><span class="toc-number">1.3.</span> <span class="toc-text">MongoDB Windows安装与运行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MongoDB%E4%B8%89%E5%85%83%E7%B4%A0"><span class="toc-number">1.4.</span> <span class="toc-text">MongoDB三元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MongoDB%E4%B8%AD%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="toc-number">1.5.</span> <span class="toc-text">MongoDB中数据库的基本使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MongoDB%E4%B8%AD%E9%9B%86%E5%90%88%E7%9A%84%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4"><span class="toc-number">1.6.</span> <span class="toc-text">MongoDB中集合的基础命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MongoDB%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.7.</span> <span class="toc-text">MongoDB数据类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MongoDB%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5"><span class="toc-number">1.8.</span> <span class="toc-text">MongoDB增删改查</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#MongoDB%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE"><span class="toc-number">1.8.1.</span> <span class="toc-text">MongoDB插入数据</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MongoDB%E4%BF%9D%E5%AD%98-%E4%BF%AE%E6%94%B9"><span class="toc-number">1.9.</span> <span class="toc-text">MongoDB保存 修改</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Mongo%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.9.1.</span> <span class="toc-text">Mongo查询</span></a></li></ol></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://s1.ax1x.com/2020/08/11/aO5rBq.jpg)"><nav id="nav"><span class="pull-left" id="blog_name"><a class="blog_title" id="site-name" href="/">斯人若彩虹，遇上方知有</a></span><span class="pull-right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div></div><span class="toggle-menu close"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">MangoDB</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-12-13T14:07:52.000Z" title="发表于 2020-12-13 22:07:52">2020-12-13</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-12-14T13:45:39.286Z" title="更新于 2020-12-14 21:45:39">2020-12-14</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Python/">Python</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2020/12/13/mangodb/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count comment-count" data-xid="/2020/12/13/mangodb/" itemprop="commentCount"></span></a></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h2 id="MangoDB"><a href="#MangoDB" class="headerlink" title="MangoDB"></a>MangoDB</h2><h3 id="SQL与NoSQL区别"><a href="#SQL与NoSQL区别" class="headerlink" title="SQL与NoSQL区别"></a>SQL与NoSQL区别</h3><ul>
+<li>在SQL中层级关系:数据库-&gt;表-&gt;数据</li>
+<li>在NoSQL中是:数据库-&gt;集合-&gt;文档</li>
+</ul>
+<h3 id="MongoDB优势"><a href="#MongoDB优势" class="headerlink" title="MongoDB优势"></a>MongoDB优势</h3><ul>
+<li>无数据结构限制<ul>
+<li>没有表结构的概念，每条记录可以有完全不同的结构</li>
+<li>业务开发方便快捷</li>
+</ul>
+</li>
+<li>大数据量和高性能<ul>
+<li>nosql数据库都具有非常高的读写性能，尤其在大数量下表现优秀</li>
+</ul>
+</li>
+<li>良好的支持<ul>
+<li>完善的文档</li>
+<li>齐全的驱动支持</li>
+</ul>
+</li>
+</ul>
+<h3 id="MongoDB-Windows安装与运行"><a href="#MongoDB-Windows安装与运行" class="headerlink" title="MongoDB Windows安装与运行"></a>MongoDB Windows安装与运行</h3><ul>
+<li><p>Windows安装MongoDB：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/chy18883701161/p/11100560.html">https://www.cnblogs.com/chy18883701161/p/11100560.html</a></p>
+</li>
+<li><p>把MongoDB的bin目录加入到环境变量中</p>
+</li>
+<li><p>执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongod --dbpath C:\Program Files\MongoDB\Server\4.4\data  # 启动</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>连接</p>
+<ul>
+<li>在环境变量设置好的前提下,使用以下命令<code>mongo</code>就可以进入到mongo的操作终端了</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongo</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="MongoDB三元素"><a href="#MongoDB三元素" class="headerlink" title="MongoDB三元素"></a>MongoDB三元素</h3><ul>
+<li><p>三元素：数据库、集合、文档</p>
+</li>
+<li><p>文档：就是关系型数据库中的一行。文档是一个对象,由键值对构成,是json的扩展形式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;name&quot;: &quot;abc&quot;, &quot;gender&quot;: 1&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>集合:就是关系型数据库中的表。可以存储多个文档,结构可以不固定。</p>
+<p>{“name”: “abc”, “gender”: 1} {“name”: “abc”, “age”: 18} {“title”: “abc”, “price”: 1}</p>
+</li>
+</ul>
+<h3 id="MongoDB中数据库的基本使用"><a href="#MongoDB中数据库的基本使用" class="headerlink" title="MongoDB中数据库的基本使用"></a>MongoDB中数据库的基本使用</h3><ul>
+<li><p>查看数据库</p>
+</li>
+<li><ul>
+<li>show dbs</li>
+</ul>
+</li>
+<li><p>切换数据库</p>
+</li>
+<li><ul>
+<li>use 数据库  </li>
+</ul>
+</li>
+<li><p>查看当前的数据库 </p>
+</li>
+<li><ul>
+<li>db  </li>
+</ul>
+</li>
+<li><p>删除数据库 </p>
+</li>
+<li><ul>
+<li>db.dropDatabase()</li>
+</ul>
+</li>
+<li><p>会自动创建数据库</p>
+</li>
+<li><ul>
+<li>use 数据库 </li>
+</ul>
+</li>
+<li><p>查看集合</p>
+</li>
+<li><ul>
+<li>show tables/show collections </li>
+</ul>
+</li>
+</ul>
+<h3 id="MongoDB中集合的基础命令"><a href="#MongoDB中集合的基础命令" class="headerlink" title="MongoDB中集合的基础命令"></a>MongoDB中集合的基础命令</h3><p>不手动创建集合,向不存在的集合中第一次加入数据时，集合会被创建出来！！！！</p>
+<p>手动创建集合 : db.createCollection(name,options)</p>
+<ul>
+<li>name: 要创建的集合名称<ul>
+<li>命名规范：<ul>
+<li>不是空的字符</li>
+<li>全部小写</li>
+<li>不要有特殊符号</li>
+<li>不能使用和系统自带的数据库的名称</li>
+<li>最多64字节</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>options: 可选参数, 指定有关内存大小及索引的选项</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.createCollection(&#39;sub&#39;,&#123;capped:true,size:10&#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>参数capped:默认值为false表示不设置上限，值为true表示设置上限</p>
+</li>
+<li><p>参数size:当capped值为true时，需要制定此参数。表示上限大小，当文档达到上限时，会将之前的数据覆盖，单位为字节，少于256字节会被定义为256</p>
+</li>
+<li><p>查看集合</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show collections</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>删除集合：db.集合名称.drop()</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.xxxx.drop()</span><br></pre></td></tr></table></figure>
+
+<h3 id="MongoDB数据类型"><a href="#MongoDB数据类型" class="headerlink" title="MongoDB数据类型"></a>MongoDB数据类型</h3><ul>
+<li><p>String:字符串，必须是有效的UTF-8</p>
+</li>
+<li><p>Boolean:存储一个布尔值，true或者false</p>
+</li>
+<li><p>Integer:整数可以是32位或64位，这取决于服务器</p>
+</li>
+<li><p>Double:存储浮点数</p>
+</li>
+<li><p>Arrays:数组或列表</p>
+</li>
+<li><p>Object:嵌入式文档</p>
+</li>
+<li><p>Null:存储Null值</p>
+</li>
+<li><p>Timestamp:时间戳， 表示从1970-1-1到现在的总秒数</p>
+</li>
+<li><p>Object ID是一个12字节的十六进制数</p>
+</li>
+</ul>
+<h3 id="MongoDB增删改查"><a href="#MongoDB增删改查" class="headerlink" title="MongoDB增删改查"></a>MongoDB增删改查</h3><ul>
+<li>mongoDB中一张表称为一个集合</li>
+</ul>
+<h4 id="MongoDB插入数据"><a href="#MongoDB插入数据" class="headerlink" title="MongoDB插入数据"></a>MongoDB插入数据</h4><ul>
+<li><p>db.集合名.insert({})  数据格式为json,id不能重复，支持多条插入数据库</p>
+</li>
+<li><p>插入单条数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.sansan.insert(&#123;x:1&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>插入多条数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">for(i&#x3D;3;i&lt;10;i++)db.sansan.insert(&#123;x:i&#125;)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="MongoDB保存-修改"><a href="#MongoDB保存-修改" class="headerlink" title="MongoDB保存 修改"></a>MongoDB保存 修改</h3><ul>
+<li><p>命令：<code>db.集合名称.save(document)</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">db.stu.save(&#123;_id:ObjectId(&quot;5f169b37d74866264ed9a7db&quot;), name:&#39;gj&#39;, gender:2&#125;) #有id 进行更改</span><br><span class="line">db.stu.save(&#123;name:&#39;gj&#39;, gender:2&#125;) #无ID 直接增加</span><br><span class="line">db.stu.find()</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="Mongo查询"><a href="#Mongo查询" class="headerlink" title="Mongo查询"></a>Mongo查询</h4><ul>
+<li><p>测试数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">db.stu.insert([&#123;&quot;name&quot; : &quot;张三&quot;, &quot;hometown&quot; : &quot;长沙&quot;, &quot;age&quot; : 20, &quot;gender&quot; : true &#125;,</span><br><span class="line">&#123;&quot;name&quot; : &quot;老李&quot;, &quot;hometown&quot; : &quot;广州&quot;, &quot;age&quot; : 18, &quot;gender&quot; : false &#125;,</span><br><span class="line">&#123;&quot;name&quot; : &quot;王麻子&quot;, &quot;hometown&quot; : &quot;北京&quot;, &quot;age&quot; : 18, &quot;gender&quot; : false &#125;,</span><br><span class="line">&#123;&quot;name&quot; : &quot;刘六&quot;, &quot;hometown&quot; : &quot;深圳&quot;, &quot;age&quot; : 40, &quot;gender&quot; : true &#125;,</span><br><span class="line">&#123;&quot;name&quot; : &quot;jerry&quot;, &quot;hometown&quot; : &quot;长沙&quot;, &quot;age&quot; : 16, &quot;gender&quot; : true &#125;,</span><br><span class="line">&#123;&quot;name&quot; : &quot;小永&quot;, &quot;hometown&quot; : &quot;广州&quot;, &quot;age&quot; : 45, &quot;gender&quot; : true &#125;,</span><br><span class="line">&#123;&quot;name&quot; : &quot;老amy&quot;, &quot;hometown&quot; : &quot;衡阳&quot;, &quot;age&quot; : 18, &quot;gender&quot; : true &#125;])</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查询所有数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.stu.find(&#123;条件⽂档&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>pretty():将结果格式化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.stu.find(&#123;条件⽂档&#125;).pretty()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查询单条数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.stu.findOne(&#123;条件⽂档&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>有条件的查询数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">查询x等于100的数据</span><br><span class="line">db.stu.find(&#123;x:100&#125;)</span><br><span class="line"></span><br><span class="line">查询x等于100，y等于99的</span><br><span class="line">db.stu.find(&#123;x:100,y:99&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>比较运算符</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">等于：默认是等于判断，没有运算符</span><br><span class="line">小于：$lt</span><br><span class="line">小于等于：$lte</span><br><span class="line">大于：$gt</span><br><span class="line">大于等于：$gte</span><br><span class="line"></span><br><span class="line">查询y大于等于18的数据</span><br><span class="line">db.stu.find(&#123;y:&#123;$gte:18&#125;&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>范围运算</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">使用$in,$nin判断是否在某个范围内查询年龄为18、28的学生</span><br><span class="line">db.stu.find(&#123;age:&#123;$in:[18,28]&#125;&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>逻辑运算符</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">or:使用$or，值为数组，数组中每个元素为json</span><br><span class="line">db.stu.find(&#123;$or:[&#123;age:&#123;$gt:18&#125;&#125;,&#123;gender:false&#125;]&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>自定义查询</p>
+<ul>
+<li><p>mongo shell 是一个js的执行环境</p>
+<p>使用$where 写一个函数， 返回满足条件的数据</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">查询年龄大于30的学生</span><br><span class="line">db.jerry_collection.find(&#123;</span><br><span class="line"> $where:function() &#123;</span><br><span class="line">     return this.age&gt;30;&#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>映射：指定返回的字段,如果为1则返回改字段，如果为0则除了改字段外所有字段返回。id如果没写会默认返回</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.sansan.find(&#123;&#125;,&#123;_id:1&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>排序</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">按照年龄升序排序</span><br><span class="line">db.stu().find().sort(&#123;age:1&#125;)</span><br><span class="line"></span><br><span class="line">按照年龄降序排序</span><br><span class="line">db.stu().find().sort(&#123;age:-1&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.集合名称.update(&#123;query&#125;, &#123;update&#125;, &#123;multi: boolean&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li></li>
+</ul>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">三三不得酒吖</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://yinshaoxuan.github.io/2020/12/13/mangodb/">https://yinshaoxuan.github.io/2020/12/13/mangodb/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://yinshaoxuan.github.io" target="_blank">斯人若彩虹，遇上方知有</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/MangoDB/">MangoDB</a><a class="post-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></div><div class="post_share"><div class="social-share" data-image="https://s1.ax1x.com/2020/08/11/aO5rBq.jpg" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2020/12/09/scrapypic/"><img class="next-cover" data-lazy-src="https://s1.ax1x.com/2020/08/11/aO5rBq.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">scrapy爬取图片</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></article></main><footer id="footer" style="background-image: url(https://s1.ax1x.com/2020/08/11/aO5rBq.jpg)" data-type="photo"><div id="footer-wrap"><div class="copyright">&copy;2020 By 三三不得酒吖</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font_plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font_minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module" defer></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js" async></script><script>var endLoading = function () {
+  document.body.style.overflow = 'auto';
+  document.getElementById('loading-box').classList.add("loaded")
+}
+window.addEventListener('load',endLoading)</script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    window.valine = new Valine({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+    });
+    if ('nick,mail') { valine.config.requiredFields= 'nick,mail'.split(',') }
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else $.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) loadComment(document.querySelector('#vcomment'),loadValine)
+  else setTimeout(() => loadValine(), 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><canvas class="fireworks"></canvas><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="/js/third-party/fireworks.js"></script></div></body></html>
