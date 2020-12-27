@@ -1,0 +1,316 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>移动端爬取数据 | 斯人若彩虹，遇上方知有</title><meta name="description" content="UIAutomator的介绍UIAutomator是google提供的用来做安卓自动化测试的一个java库 UIAutomator的缺陷 测试脚本只能用Java语言开发 测试脚本要打包成jar包或者apk包上传到设备上才能实现  UIAutomato2的优势 UI自动化编写采用Python，学习成本低 UI控件识别有专门的工具 weditor 环境搭建简单  UI自动化脚本运行稳定  项目地址ht"><meta name="keywords" content="UIAutomator2,adb,weditor"><meta name="author" content="三三不得酒吖"><meta name="copyright" content="三三不得酒吖"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/cat.png"><link rel="canonical" href="https://yinshaoxuan.github.io/2020/12/27/adroin/"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin="crossorigin"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta property="og:type" content="article"><meta property="og:title" content="移动端爬取数据"><meta property="og:url" content="https://yinshaoxuan.github.io/2020/12/27/adroin/"><meta property="og:site_name" content="斯人若彩虹，遇上方知有"><meta property="og:description" content="UIAutomator的介绍UIAutomator是google提供的用来做安卓自动化测试的一个java库 UIAutomator的缺陷 测试脚本只能用Java语言开发 测试脚本要打包成jar包或者apk包上传到设备上才能实现  UIAutomato2的优势 UI自动化编写采用Python，学习成本低 UI控件识别有专门的工具 weditor 环境搭建简单  UI自动化脚本运行稳定  项目地址ht"><meta property="og:image" content="https://s1.ax1x.com/2020/08/11/aO5rBq.jpg"><meta property="article:published_time" content="2020-12-27T13:37:16.000Z"><meta property="article:modified_time" content="2020-12-27T13:58:40.503Z"><meta name="twitter:card" content="summary"><script>var activateDarkMode = function () {
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#000')
+  }
+}
+var activateLightMode = function () {
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#fff')
+  }
+}
+
+var getCookies = function (name) {
+  const value = `; ${document.cookie}`
+  const parts = value.split(`; ${name}=`)
+  if (parts.length === 2) return parts.pop().split(';').shift()
+}
+
+var autoChangeMode = 'false'
+var t = getCookies('theme')
+if (autoChangeMode === '1') {
+  var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+  var isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+  var isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined) {
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport) {
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour <= 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+    }
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+      if (Cookies.get('theme') === undefined) {
+        e.matches ? activateDarkMode() : activateLightMode()
+      }
+    })
+  } else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else if (autoChangeMode === '2') {
+  now = new Date()
+  hour = now.getHours()
+  isNight = hour <= 6 || hour >= 18
+  if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else {
+  if (t === 'dark') activateDarkMode()
+  else if (t === 'light') activateLightMode()
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: false,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isanchor: false    
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2020-12-27 21:58:40'
+}</script><noscript><style>
+#nav {
+  opacity: 1
+}
+.justified-gallery img {
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 5.0.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" data-lazy-src="/img/cat.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">37</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">51</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">1</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#UIAutomator%E7%9A%84%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">UIAutomator的介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UIAutomator%E7%9A%84%E7%BC%BA%E9%99%B7"><span class="toc-number">2.</span> <span class="toc-text">UIAutomator的缺陷</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UIAutomato2%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="toc-number">3.</span> <span class="toc-text">UIAutomato2的优势</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UIAutomator2%E7%9A%84%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="toc-number">4.</span> <span class="toc-text">UIAutomator2的执行流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#adb"><span class="toc-number">5.</span> <span class="toc-text">adb</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#adb%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8"><span class="toc-number">5.1.</span> <span class="toc-text">adb的安装与使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#adb%E6%9C%89%E4%BB%80%E4%B9%88%E4%BD%9C%E7%94%A8%EF%BC%9F"><span class="toc-number">5.2.</span> <span class="toc-text">adb有什么作用？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#adb%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%EF%BC%9F"><span class="toc-number">5.3.</span> <span class="toc-text">adb如何使用？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UIAutomator2%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8"><span class="toc-number">6.</span> <span class="toc-text">UIAutomator2快速入门</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#UIAutomator2%E6%8E%A7%E5%88%B6%E7%A7%BB%E5%8A%A8%E8%AE%BE%E5%A4%87"><span class="toc-number">6.1.</span> <span class="toc-text">UIAutomator2控制移动设备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UIAutomato2%E5%90%AF%E5%8A%A8%E6%89%8B%E6%9C%BAapp"><span class="toc-number">6.2.</span> <span class="toc-text">UIAutomato2启动手机app</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#weditor"><span class="toc-number">7.</span> <span class="toc-text">weditor</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFActivity%EF%BC%9F"><span class="toc-number">7.1.</span> <span class="toc-text">什么是Activity？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Activity%E7%9A%84%E6%8E%A7%E4%BB%B6"><span class="toc-number">7.2.</span> <span class="toc-text">Activity的控件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#weditor%E5%AE%89%E8%A3%85"><span class="toc-number">7.3.</span> <span class="toc-text">weditor安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#weditor%E7%9A%84%E7%95%8C%E9%9D%A2%E5%8C%85%E6%8B%AC"><span class="toc-number">7.4.</span> <span class="toc-text">weditor的界面包括</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UiSelector%E5%92%8C%E6%8E%A7%E4%BB%B6%E5%AE%9A%E4%BD%8D"><span class="toc-number">7.5.</span> <span class="toc-text">UiSelector和控件定位</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E6%9C%AC%E5%AE%9A%E4%BD%8D%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="toc-number">7.6.</span> <span class="toc-text">文本定位的方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ClassName%E5%AE%9A%E4%BD%8D%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="toc-number">8.</span> <span class="toc-text">ClassName定位的方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B5%84%E6%BA%90id%E8%BF%9B%E8%A1%8C%E5%AE%9A%E4%BD%8D"><span class="toc-number">9.</span> <span class="toc-text">资源id进行定位</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B7%E5%90%88%E5%AE%9A%E4%BD%8D%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="toc-number">9.1.</span> <span class="toc-text">混合定位的方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9D%90%E6%A0%87%E7%82%B9%E5%AE%9A%E4%BD%8D%E6%B3%95"><span class="toc-number">10.</span> <span class="toc-text">坐标点定位法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#xpath%E5%AE%9A%E4%BD%8D%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="toc-number">11.</span> <span class="toc-text">xpath定位的方式</span></a></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://s1.ax1x.com/2020/08/11/aO5rBq.jpg)"><nav id="nav"><span class="pull-left" id="blog_name"><a class="blog_title" id="site-name" href="/">斯人若彩虹，遇上方知有</a></span><span class="pull-right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div></div><span class="toggle-menu close"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">移动端爬取数据</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-12-27T13:37:16.000Z" title="发表于 2020-12-27 21:37:16">2020-12-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-12-27T13:58:40.503Z" title="更新于 2020-12-27 21:58:40">2020-12-27</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2020/12/27/adroin/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count comment-count" data-xid="/2020/12/27/adroin/" itemprop="commentCount"></span></a></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h2 id="UIAutomator的介绍"><a href="#UIAutomator的介绍" class="headerlink" title="UIAutomator的介绍"></a>UIAutomator的介绍</h2><p>UIAutomator是google提供的用来做安卓自动化测试的一个java库</p>
+<h2 id="UIAutomator的缺陷"><a href="#UIAutomator的缺陷" class="headerlink" title="UIAutomator的缺陷"></a>UIAutomator的缺陷</h2><ul>
+<li>测试脚本只能用Java语言开发</li>
+<li>测试脚本要打包成jar包或者apk包上传到设备上才能实现</li>
+</ul>
+<h2 id="UIAutomato2的优势"><a href="#UIAutomato2的优势" class="headerlink" title="UIAutomato2的优势"></a>UIAutomato2的优势</h2><ul>
+<li>UI自动化编写采用Python，学习成本低</li>
+<li>UI控件识别有专门的工具 weditor</li>
+<li>环境搭建简单 </li>
+<li>UI自动化脚本运行稳定</li>
+</ul>
+<p>项目地址<a target="_blank" rel="noopener" href="https://github.com/openatx/uiautomator2">https://github.com/openatx/uiautomator2</a></p>
+<h2 id="UIAutomator2的执行流程"><a href="#UIAutomator2的执行流程" class="headerlink" title="UIAutomator2的执行流程"></a>UIAutomator2的执行流程</h2><ul>
+<li>在移动设备上安装atx-agent(守护进程)，随后atx-agent启动ui2服务(默认7912端口)进行监听</li>
+<li>在PC端来编写脚本(相当于发送HTTP请求到移动设备的server端)</li>
+<li>移动设备通过wifi或usb接收到了PC上发来的HTTP请求，执行定制的操作</li>
+</ul>
+<h2 id="adb"><a href="#adb" class="headerlink" title="adb"></a>adb</h2><h3 id="adb的安装与使用"><a href="#adb的安装与使用" class="headerlink" title="adb的安装与使用"></a>adb的安装与使用</h3><p>Adb又称Android调试桥，用于通过电脑端与模拟器或者是设备之间的交互的一个工具</p>
+<p><strong>Adb client</strong> 命令行程序‘adb’用于从shell或脚本中运行adb命令</p>
+<p><strong>Adb server</strong> adb server 是运行在PC的的一个后台程序</p>
+<p><strong>Adbd</strong> 程序adbd作为一个后台进程在Android设备或模拟器系统中运行</p>
+<h3 id="adb有什么作用？"><a href="#adb有什么作用？" class="headerlink" title="adb有什么作用？"></a>adb有什么作用？</h3><ul>
+<li>安装卸载apk文件</li>
+<li>移动设备和PC之间拷贝文件</li>
+<li>查看设备上安装的应用信息</li>
+<li>文件管理</li>
+<li>按键操作</li>
+</ul>
+<h3 id="adb如何使用？"><a href="#adb如何使用？" class="headerlink" title="adb如何使用？"></a>adb如何使用？</h3><p>把adb的bin目录添加到环境变量当中</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://cdn.nlark.com/yuque/0/2020/png/1182303/1600757530019-dc33b2de-cf82-4ff3-a085-bfaac05836b3.png" alt="image.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">adb devices 查看链接的移动设备</span><br><span class="line">adb kill-server 关闭链接的移动设备</span><br><span class="line">adb install apk文件路径  安装app应用</span><br><span class="line">adb shell pm list packages 查看应用包名</span><br><span class="line">adb uninstall 应用包名 卸载应用</span><br></pre></td></tr></table></figure>
+
+<h2 id="UIAutomator2快速入门"><a href="#UIAutomator2快速入门" class="headerlink" title="UIAutomator2快速入门"></a>UIAutomator2快速入门</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m uiautomator2 init  初始化移动设备</span><br></pre></td></tr></table></figure>
+
+<p><strong>Uiautomator-server</strong>：  就是谷歌原声的 uiautomator</p>
+<p><strong>Atx-agent</strong>： uiautomator的守护进程</p>
+<p><strong>minicap和minitouch</strong> 中2个包是atx-agent增加远程控制功能的依赖</p>
+<h3 id="UIAutomator2控制移动设备"><a href="#UIAutomator2控制移动设备" class="headerlink" title="UIAutomator2控制移动设备"></a>UIAutomator2控制移动设备</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> uiautomator2 <span class="keyword">as</span> u2</span><br><span class="line"></span><br><span class="line">d = u2.connect_wifi(<span class="string">&#x27;172.17.100.15&#x27;</span>)  通过wifi</span><br><span class="line">d = u2.connect_usb(<span class="string">&#x27;127.0.0.1:62025&#x27;</span>) 通过usb（手机序列号）</span><br><span class="line">d = u2.connect_adb_wifi(<span class="string">&#x27;172.17.100.15:5555&#x27;</span>) 通过adb wifi</span><br></pre></td></tr></table></figure>
+
+<h3 id="UIAutomato2启动手机app"><a href="#UIAutomato2启动手机app" class="headerlink" title="UIAutomato2启动手机app"></a>UIAutomato2启动手机app</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">使用aapt工具进入这个路径输入</span><br><span class="line">aapt dump badging apk的文件名</span><br><span class="line"></span><br><span class="line">找到包名</span><br><span class="line">d.app_start(<span class="string">&#x27;包名&#x27;</span>)</span><br><span class="line"></span><br><span class="line">停止</span><br><span class="line">d.app_stop(<span class="string">&#x27;包名&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">d.service(&#39;uiautomator&#39;).running() uiautomator运行状态</span><br><span class="line"></span><br><span class="line">d.service(&#39;uiautomator&#39;).start() 启动uiautomator</span><br><span class="line"></span><br><span class="line">d.service(&#39;uiautomator&#39;).stop() 停止uiautomator</span><br><span class="line"></span><br><span class="line">d.app_install(data&#x3D;&#39;apk地址&#39;) 安装app</span><br><span class="line"></span><br><span class="line">d.app_current() 获取当前前台app的信息</span><br><span class="line"></span><br><span class="line">d.app_stop(&#39;包名&#39;) 停止当前app</span><br><span class="line"></span><br><span class="line">d.app_clear(&#39;包名&#39;) 清除缓存</span><br><span class="line"></span><br><span class="line">d.app_uninstall(&#39;包名&#39;) 卸载app</span><br><span class="line"></span><br><span class="line">d.app_list() 获取所有app的信息</span><br></pre></td></tr></table></figure>
+
+<h2 id="weditor"><a href="#weditor" class="headerlink" title="weditor"></a>weditor</h2><h3 id="什么是Activity？"><a href="#什么是Activity？" class="headerlink" title="什么是Activity？"></a>什么是Activity？</h3><p>Activity是Android系统中的四大组件之一，可以用于显示View。Activity是一个与用户交互的系统模块</p>
+<h3 id="Activity的控件"><a href="#Activity的控件" class="headerlink" title="Activity的控件"></a>Activity的控件</h3><ul>
+<li>TextView 显示文字</li>
+<li>EditText 输入框</li>
+<li>ImageView 显示图片</li>
+<li>Button 按钮</li>
+<li>CheckBox 复选框</li>
+<li>RadioButton 单选按钮</li>
+</ul>
+<h3 id="weditor安装"><a href="#weditor安装" class="headerlink" title="weditor安装"></a>weditor安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install weditor -i https:&#x2F;&#x2F;pypi.douban.com&#x2F;simple</span><br><span class="line">在命令行输入 weditor</span><br></pre></td></tr></table></figure>
+
+<h3 id="weditor的界面包括"><a href="#weditor的界面包括" class="headerlink" title="weditor的界面包括"></a>weditor的界面包括</h3><ul>
+<li>移动设备选择区</li>
+<li>控件属性区域</li>
+<li>代码展示区</li>
+<li>层级关系和结果展示区域</li>
+</ul>
+<h3 id="UiSelector和控件定位"><a href="#UiSelector和控件定位" class="headerlink" title="UiSelector和控件定位"></a>UiSelector和控件定位</h3><ul>
+<li><p>UiSelector</p>
+</li>
+<li><p>Xpath</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>index</th>
+<th>int</th>
+<th>索引</th>
+<th>0</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>instance</td>
+<td>int</td>
+<td>实例</td>
+<td>5</td>
+</tr>
+<tr>
+<td>class</td>
+<td>Sting</td>
+<td>类名</td>
+<td>android.widget.TextView</td>
+</tr>
+<tr>
+<td>package</td>
+<td>Sting</td>
+<td>包名</td>
+<td>com.tl.kaoyan</td>
+</tr>
+<tr>
+<td>check</td>
+<td>boolean</td>
+<td>控件勾选状态</td>
+<td>false/true</td>
+</tr>
+<tr>
+<td>enable/clickable</td>
+<td>boolean</td>
+<td>控件可点击</td>
+<td>false/true</td>
+</tr>
+<tr>
+<td>focused/focusable</td>
+<td>boolean</td>
+<td>焦点</td>
+<td>false/true</td>
+</tr>
+<tr>
+<td>Scrollable</td>
+<td>boolean</td>
+<td>滚动条</td>
+<td>false/true</td>
+</tr>
+<tr>
+<td>Long-clickable</td>
+<td>boolean</td>
+<td>长按</td>
+<td>false/true</td>
+</tr>
+<tr>
+<td>selected</td>
+<td>boolean</td>
+<td>选择状态</td>
+<td>false/true</td>
+</tr>
+</tbody></table>
+<h3 id="文本定位的方式"><a href="#文本定位的方式" class="headerlink" title="文本定位的方式"></a>文本定位的方式</h3><ul>
+<li>Text 全文本匹配</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import uiautomator2 as u2</span><br><span class="line">import time</span><br><span class="line">d &#x3D; u2.connect_usb(&#39;127.0.0.1:62001&#39;) #连接根据自己情况设置 cmd中adb.devices可以显示</span><br><span class="line">d.app_start(&#39;com.tal.kaoyan&#39;)</span><br><span class="line"></span><br><span class="line">time.sleep(1)</span><br><span class="line"># 全文本匹配</span><br><span class="line">d(text&#x3D;&#39;密码登录&#39;).click()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>textContains 文本包含</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import uiautomator2 as u2</span><br><span class="line">import time</span><br><span class="line">d &#x3D; u2.connect_usb(&#39;127.0.0.1:62001&#39;)</span><br><span class="line">d.app_start(&#39;com.tal.kaoyan&#39;)</span><br><span class="line">time.sleep(1)</span><br><span class="line"># 文本包含</span><br><span class="line">d(textContains&#x3D;&#39;密码&#39;).click()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>textMatches 正则表达式</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import uiautomator2 as u2</span><br><span class="line">import time</span><br><span class="line">d &#x3D; u2.connect_usb(&#39;127.0.0.1:62001&#39;)</span><br><span class="line">d.app_start(&#39;com.tal.kaoyan&#39;)</span><br><span class="line">time.sleep(1)</span><br><span class="line"># 正则表达式</span><br><span class="line">d(textMatches&#x3D;&#39;.&#123;2&#125;登录&#39;).click()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>textStartsWith 起始文本</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import uiautomator2 as u2</span><br><span class="line">import time</span><br><span class="line">d &#x3D; u2.connect_usb(&#39;127.0.0.1:62001&#39;)</span><br><span class="line">d.app_start(&#39;com.tal.kaoyan&#39;)</span><br><span class="line">time.sleep(1)</span><br><span class="line"># 起始文本</span><br><span class="line">d(textStartsWith&#x3D;&#39;密码登&#39;).click()</span><br><span class="line"># d(textStartsWith&#x3D;&#39;密&#39;).click()</span><br></pre></td></tr></table></figure>
+
+<h2 id="ClassName定位的方式"><a href="#ClassName定位的方式" class="headerlink" title="ClassName定位的方式"></a>ClassName定位的方式</h2><ul>
+<li>className classNmae的值</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import uiautomator2 as u2</span><br><span class="line">import time</span><br><span class="line">d &#x3D; u2.connect_usb(&#39;127.0.0.1:62001&#39;)</span><br><span class="line">d.app_start(&#39;com.tal.kaoyan&#39;)</span><br><span class="line">time.sleep(1)</span><br><span class="line"># 通过classname来控件控件 需要注意层级关系</span><br><span class="line">d(className&#x3D;&#39;android.widget.TextView&#39;)[5].click()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>classNameMatches 正则表达式匹配 classNmae的值</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import uiautomator2 as u2</span><br><span class="line">import time</span><br><span class="line">d &#x3D; u2.connect_usb(&#39;127.0.0.1:62001&#39;)</span><br><span class="line">d.app_start(&#39;com.tal.kaoyan&#39;)</span><br><span class="line">time.sleep(1)</span><br><span class="line"># 通过实例来控制控件</span><br><span class="line">d(className&#x3D;&#39;android.widget.TextView&#39;,instance&#x3D;5).click()</span><br></pre></td></tr></table></figure>
+
+<h2 id="资源id进行定位"><a href="#资源id进行定位" class="headerlink" title="资源id进行定位"></a>资源id进行定位</h2><ul>
+<li>resourcdId 资源id</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import uiautomator2 as u2</span><br><span class="line">import time</span><br><span class="line">d &#x3D; u2.connect_usb(&#39;127.0.0.1:62001&#39;)</span><br><span class="line">d.app_start(&#39;com.tal.kaoyan&#39;)</span><br><span class="line">time.sleep(1)</span><br><span class="line"># 通过正则表达式来控制</span><br><span class="line">d(classNameMatches&#x3D;&#39;android\.widget\.\w&#123;8&#125;&#39;,text&#x3D;&#39;密码登录&#39;).click()</span><br></pre></td></tr></table></figure>
+
+<h3 id="混合定位的方式"><a href="#混合定位的方式" class="headerlink" title="混合定位的方式"></a>混合定位的方式</h3><ul>
+<li>文本定位 资源id ClassName等可以配合使用来进行定位</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import uiautomator2 as u2</span><br><span class="line">import time</span><br><span class="line">d &#x3D; u2.connect_usb(&#39;127.0.0.1:62001&#39;)</span><br><span class="line">d.app_start(&#39;com.tal.kaoyan&#39;)</span><br><span class="line">time.sleep(1)</span><br><span class="line">d(className&#x3D;&#39;android.support.v7.widget.RecyclerView&#39;).child(text&#x3D;&#39;设备&#39;).click()</span><br></pre></td></tr></table></figure>
+
+<h2 id="坐标点定位法"><a href="#坐标点定位法" class="headerlink" title="坐标点定位法"></a>坐标点定位法</h2><ul>
+<li>坐标点定位法分为2种方式 一种是通过原始的坐标点来呈现。一种是通过%号的方式来呈现</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 坐标定位</span><br><span class="line">import uiautomator2 as u2</span><br><span class="line">import time</span><br><span class="line">d &#x3D; u2.connect_usb(&#39;127.0.0.1:62001&#39;)</span><br><span class="line">d.app_start(&#39;com.tal.kaoyan&#39;)</span><br><span class="line">time.sleep(1)</span><br><span class="line"># d.click(0.055, 0.781)  49, 1124  110, 1124  0.123, 0.781</span><br><span class="line">d.click(0.585, 0.072)</span><br></pre></td></tr></table></figure>
+
+<h2 id="xpath定位的方式"><a href="#xpath定位的方式" class="headerlink" title="xpath定位的方式"></a>xpath定位的方式</h2><ul>
+<li>d.xpath(‘xpath语句’)</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import uiautomator2 as u2</span><br><span class="line">import time</span><br><span class="line">d &#x3D; u2.connect_usb(&#39;127.0.0.1:62001&#39;)</span><br><span class="line"># with open(&#39;phone.file&#39;,&#39;w&#39;,encoding&#x3D;&#39;utf-8&#39;) as file_obj:</span><br><span class="line">#     file_obj.write(d.dump_hierarchy())</span><br><span class="line"></span><br><span class="line"># d.app_start(&#39;com.google.android.gms&#39;)</span><br><span class="line">#</span><br><span class="line"># time.sleep(1)</span><br><span class="line"># d.xpath(&#39;&#x2F;&#x2F;*[@text&#x3D;&quot;设备&quot;]&#39;).click()</span><br><span class="line">d.app_start(&#39;com.tal.kaoyan&#39;)</span><br><span class="line"></span><br><span class="line">time.sleep(1)</span><br><span class="line">d.xpath(&#39;&#x2F;&#x2F;*[@resource-id&#x3D;&quot;com.tal.kaoyan:id&#x2F;login_code_touname&quot;]&#39;).click()</span><br><span class="line">time.sleep(2)</span><br><span class="line">d(resourceId&#x3D;&#39;com.tal.kaoyan:id&#x2F;login_email_edittext&#39;).set_text(&#39;123456&#39;)</span><br></pre></td></tr></table></figure>
+
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">三三不得酒吖</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://yinshaoxuan.github.io/2020/12/27/adroin/">https://yinshaoxuan.github.io/2020/12/27/adroin/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://yinshaoxuan.github.io" target="_blank">斯人若彩虹，遇上方知有</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/UIAutomator2/">UIAutomator2</a><a class="post-meta__tags" href="/tags/adb/">adb</a><a class="post-meta__tags" href="/tags/weditor/">weditor</a></div><div class="post_share"><div class="social-share" data-image="https://s1.ax1x.com/2020/08/11/aO5rBq.jpg" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2020/12/13/mangodb/"><img class="next-cover" data-lazy-src="https://s1.ax1x.com/2020/08/11/aO5rBq.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">MangoDB</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></article></main><footer id="footer" style="background-image: url(https://s1.ax1x.com/2020/08/11/aO5rBq.jpg)" data-type="photo"><div id="footer-wrap"><div class="copyright">&copy;2020 By 三三不得酒吖</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font_plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font_minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module" defer></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js" async></script><script>var endLoading = function () {
+  document.body.style.overflow = 'auto';
+  document.getElementById('loading-box').classList.add("loaded")
+}
+window.addEventListener('load',endLoading)</script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    window.valine = new Valine({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+    });
+    if ('nick,mail') { valine.config.requiredFields= 'nick,mail'.split(',') }
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else $.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) loadComment(document.querySelector('#vcomment'),loadValine)
+  else setTimeout(() => loadValine(), 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><canvas class="fireworks"></canvas><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="/js/third-party/fireworks.js"></script></div></body></html>
