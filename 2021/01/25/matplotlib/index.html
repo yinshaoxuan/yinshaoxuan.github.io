@@ -1,0 +1,346 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>matplotlib | 斯人若彩虹，遇上方知有</title><meta name="description" content="Matplotlib介绍 Matplotlib是一个Python的基础绘图库，它可与 NumPy 一起使用，代替Matlab使用。  将数据进行可视化，使数据更直观  使数据更加更具有说服力  安装命令  pip install matplotlib 官网：https:&#x2F;&#x2F;matplotlib.org&#x2F;users&#x2F;installing.html    图片与子图 plt.figure()生成新图片"><meta name="keywords" content="Python学习,数据分析,Matplotlib,制图"><meta name="author" content="三三不得酒吖"><meta name="copyright" content="三三不得酒吖"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/cat.png"><link rel="canonical" href="https://yinshaoxuan.github.io/2021/01/25/matplotlib/"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin="crossorigin"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta property="og:type" content="article"><meta property="og:title" content="matplotlib"><meta property="og:url" content="https://yinshaoxuan.github.io/2021/01/25/matplotlib/"><meta property="og:site_name" content="斯人若彩虹，遇上方知有"><meta property="og:description" content="Matplotlib介绍 Matplotlib是一个Python的基础绘图库，它可与 NumPy 一起使用，代替Matlab使用。  将数据进行可视化，使数据更直观  使数据更加更具有说服力  安装命令  pip install matplotlib 官网：https:&#x2F;&#x2F;matplotlib.org&#x2F;users&#x2F;installing.html    图片与子图 plt.figure()生成新图片"><meta property="og:image" content="https://s1.ax1x.com/2020/08/11/aO5rBq.jpg"><meta property="article:published_time" content="2021-01-25T11:32:50.000Z"><meta property="article:modified_time" content="2021-01-25T13:57:49.590Z"><meta name="twitter:card" content="summary"><script>var activateDarkMode = function () {
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#000')
+  }
+}
+var activateLightMode = function () {
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#fff')
+  }
+}
+
+var getCookies = function (name) {
+  const value = `; ${document.cookie}`
+  const parts = value.split(`; ${name}=`)
+  if (parts.length === 2) return parts.pop().split(';').shift()
+}
+
+var autoChangeMode = 'false'
+var t = getCookies('theme')
+if (autoChangeMode === '1') {
+  var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+  var isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+  var isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined) {
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport) {
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour <= 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+    }
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+      if (Cookies.get('theme') === undefined) {
+        e.matches ? activateDarkMode() : activateLightMode()
+      }
+    })
+  } else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else if (autoChangeMode === '2') {
+  now = new Date()
+  hour = now.getHours()
+  isNight = hour <= 6 || hour >= 18
+  if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else {
+  if (t === 'dark') activateDarkMode()
+  else if (t === 'light') activateLightMode()
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: false,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isanchor: false    
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2021-01-25 21:57:49'
+}</script><noscript><style>
+#nav {
+  opacity: 1
+}
+.justified-gallery img {
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 5.0.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" data-lazy-src="/img/cat.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">41</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">56</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">1</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Matplotlib"><span class="toc-number">1.</span> <span class="toc-text">Matplotlib</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E7%89%87%E4%B8%8E%E5%AD%90%E5%9B%BE"><span class="toc-number">1.2.</span> <span class="toc-text">图片与子图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE"><span class="toc-number">1.3.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95-%E6%8A%98%E7%BA%BF%E5%9B%BE"><span class="toc-number">1.4.</span> <span class="toc-text">索引-折线图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%A3%E7%82%B9%E5%9B%BE"><span class="toc-number">1.5.</span> <span class="toc-text">散点图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%A1%E5%BD%A2%E5%9B%BE"><span class="toc-number">1.6.</span> <span class="toc-text">条形图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B4%E6%96%B9%E5%9B%BE"><span class="toc-number">1.7.</span> <span class="toc-text">直方图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%87%E5%BD%A2%E5%9B%BE"><span class="toc-number">1.8.</span> <span class="toc-text">扇形图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%B7%E8%BE%BE%E5%9B%BE"><span class="toc-number">1.9.</span> <span class="toc-text">雷达图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%B1%E5%9E%8B%E5%9B%BE"><span class="toc-number">1.10.</span> <span class="toc-text">箱型图</span></a></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://s1.ax1x.com/2020/08/11/aO5rBq.jpg)"><nav id="nav"><span class="pull-left" id="blog_name"><a class="blog_title" id="site-name" href="/">斯人若彩虹，遇上方知有</a></span><span class="pull-right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div></div><span class="toggle-menu close"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">matplotlib</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-01-25T11:32:50.000Z" title="发表于 2021-01-25 19:32:50">2021-01-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-01-25T13:57:49.590Z" title="更新于 2021-01-25 21:57:49">2021-01-25</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2021/01/25/matplotlib/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count comment-count" data-xid="/2021/01/25/matplotlib/" itemprop="commentCount"></span></a></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h2 id="Matplotlib"><a href="#Matplotlib" class="headerlink" title="Matplotlib"></a>Matplotlib</h2><h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><ul>
+<li><p>Matplotlib是一个Python的基础绘图库，它可与 NumPy 一起使用，代替Matlab使用。</p>
+</li>
+<li><p>将数据进行可视化，使数据更直观</p>
+</li>
+<li><p>使数据更加更具有说服力</p>
+</li>
+<li><p>安装命令</p>
+<ul>
+<li>pip install matplotlib</li>
+<li>官网：<a target="_blank" rel="noopener" href="https://matplotlib.org/users/installing.html">https://matplotlib.org/users/installing.html</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="图片与子图"><a href="#图片与子图" class="headerlink" title="图片与子图"></a>图片与子图</h3><ul>
+<li>plt.figure()生成新图片<ul>
+<li>在IPython中，执行该代码一个空白的绘图窗口就会出现，但在Jupyter中则没有任何显示</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line">fig = plt.figure()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>除此之外，Matplotlib包含一个便捷方法<strong>plt.subplots</strong>创建一个新的图片，然后返回包含了已生成子图对象的Numpy数组。</p>
+</li>
+<li><p><strong>plt.subplots(nrows, ncols, sharex, sharey)</strong></p>
+</li>
+<li><ul>
+<li>nrows子图的行数</li>
+<li>ncols子图的列数</li>
+<li>sharex 所有子图使用相同的x轴刻度</li>
+<li>sharey 所有子图使用相同的y轴刻度</li>
+</ul>
+</li>
+</ul>
+<p>那么实际上，当我们不需要使用子图时，可以通过plt对象直接绘制图形。</p>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>plt.figure(figsize=None,dpi=None)</td>
+<td>生成新的图片，figsize：图片大小，dpi：透明度</td>
+</tr>
+<tr>
+<td>plt.savefig(fname)</td>
+<td>保存图片</td>
+</tr>
+<tr>
+<td>plt.xticks(ticks=None)</td>
+<td>设置x轴刻度的值</td>
+</tr>
+<tr>
+<td>plt.yticks(ticks=None)</td>
+<td>设置y轴刻度的值</td>
+</tr>
+<tr>
+<td>plt.xlabel(xlabel)</td>
+<td>设置x轴标签</td>
+</tr>
+<tr>
+<td>plt.ylabel(ylabel)</td>
+<td>设置y轴标签</td>
+</tr>
+<tr>
+<td>plt.title()</td>
+<td>设置图标题</td>
+</tr>
+<tr>
+<td>plt.grid()</td>
+<td>根据x轴和y轴的数值展示轴网格</td>
+</tr>
+</tbody></table>
+<h3 id="索引-折线图"><a href="#索引-折线图" class="headerlink" title="索引-折线图"></a>索引-折线图</h3><ul>
+<li>plt.plot（x,y）创建折线图 marker可以更改点的类型</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line">x = [i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>,<span class="number">26</span>,<span class="number">2</span>)]</span><br><span class="line">y = [<span class="number">15</span>,<span class="number">13</span>,<span class="number">14.5</span>,<span class="number">17</span>,<span class="number">20</span>,<span class="number">25</span>,<span class="number">26</span>,<span class="number">26</span>,<span class="number">27</span>,<span class="number">22</span>,<span class="number">18</span>,<span class="number">15</span>]</span><br><span class="line">plt.plot(x,y,marker = <span class="string">&quot;.&quot;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<p><img src= "/img/loading.gif" data-lazy-src="/2021/01/25/matplotlib/Users\殷少轩\AppData\Roaming\Typora\typora-user-images\image-20210125194152631.png" alt="image-20210125194152631"></p>
+<ul>
+<li>显示刻度 plt.xticks(x,xb) 显示x刻度 并用xb标签替换</li>
+<li>plt.figure(figsize=(12,8)) 更改图片大小</li>
+<li>plt.savefig(mat.jpg) 保存图片</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line">x = [i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>,<span class="number">26</span>,<span class="number">2</span>)]</span><br><span class="line">y = [<span class="number">15</span>,<span class="number">13</span>,<span class="number">14.5</span>,<span class="number">17</span>,<span class="number">20</span>,<span class="number">25</span>,<span class="number">26</span>,<span class="number">26</span>,<span class="number">27</span>,<span class="number">22</span>,<span class="number">18</span>,<span class="number">15</span>]</span><br><span class="line">plt.plot(x,y,marker = <span class="string">&quot;.&quot;</span>)</span><br><span class="line"><span class="comment">#将刻度以X情况来显示</span></span><br><span class="line">plt.xticks(x)</span><br><span class="line"><span class="comment">#将刻度以X情况来显示</span></span><br><span class="line">xt = [i/<span class="number">2</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">48</span>)]</span><br><span class="line"><span class="comment">#rotation 可以旋转刻度</span></span><br><span class="line">plt.xticks(xt,rotation = <span class="number">90</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line">x = [i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>,<span class="number">26</span>,<span class="number">2</span>)]</span><br><span class="line">y = [<span class="number">15</span>,<span class="number">13</span>,<span class="number">14.5</span>,<span class="number">17</span>,<span class="number">20</span>,<span class="number">25</span>,<span class="number">26</span>,<span class="number">26</span>,<span class="number">27</span>,<span class="number">22</span>,<span class="number">18</span>,<span class="number">15</span>]</span><br><span class="line">plt.figure(figsize=(<span class="number">12</span>,<span class="number">8</span>))</span><br><span class="line">plt.plot(x,y,marker = <span class="string">&quot;.&quot;</span>)</span><br><span class="line"><span class="comment">#将刻度以X情况来显示 xt为刻度</span></span><br><span class="line">xt = [i/<span class="number">2</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">48</span>)]</span><br><span class="line"><span class="comment">#rotation 可以旋转刻度</span></span><br><span class="line"><span class="comment">#x刻度显示0h，0.5h xl为刻度标签</span></span><br><span class="line">xl = [<span class="string">f&quot;<span class="subst">&#123;i/<span class="number">2</span>&#125;</span>h&quot;</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">48</span>)]</span><br><span class="line">plt.xticks(xt,xl,rotation = <span class="number">90</span>) </span><br><span class="line">plt.xlabel(<span class="string">&quot;time&quot;</span>)   <span class="comment">#设置x轴标签</span></span><br><span class="line">plt.yticks(range(min(y),max(y)+<span class="number">1</span>))</span><br><span class="line">plt.ylabel(<span class="string">&quot;temp&quot;</span>)   <span class="comment">#设置y轴标签</span></span><br><span class="line"><span class="comment">#添加网格</span></span><br><span class="line">plt.grid()</span><br><span class="line"><span class="comment">#保存图片</span></span><br><span class="line">plt.savefig(<span class="string">&quot;mat.jpg&quot;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>中文显示</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#全局设置 只能支持ttf字体</span></span><br><span class="line"><span class="comment"># import matplotlib</span></span><br><span class="line"><span class="comment"># font = &#123;</span></span><br><span class="line"><span class="comment">#     &quot;family&quot;:&quot;SimHei&quot;,</span></span><br><span class="line"><span class="comment">#     &quot;weight&quot;:&quot;bold&quot;,</span></span><br><span class="line"><span class="comment">#     &quot;size&quot;:12</span></span><br><span class="line"><span class="comment"># &#125;</span></span><br><span class="line"><span class="comment"># matplotlib.rc(&quot;font&quot;,**font)</span></span><br><span class="line"><span class="comment">#通过rcParams配置参数</span></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">plt.rcParams[<span class="string">&#x27;font.sans-serif&#x27;</span>] = [<span class="string">&#x27;SimHei&#x27;</span>] <span class="comment">#替换sans-serif字体为SimHei</span></span><br><span class="line">plt.rcParams[<span class="string">&#x27;axes.unicode_minus&#x27;</span>] = <span class="literal">False</span> <span class="comment">#解决坐标轴负数的负号显示问题</span></span><br><span class="line"><span class="comment">#局部设置字体</span></span><br><span class="line"><span class="comment"># from matplotlib.font_manager import  FontProperties</span></span><br><span class="line"><span class="comment"># from matplotlib import pyplot as plt</span></span><br><span class="line"><span class="comment"># font = FontProperties(fname = r&quot;C:/Windows/Fonts/simsun.ttc&quot;,size = 14) #可传入字体位置</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#通过rcParams配置参数</span></span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">plt.rcParams[<span class="string">&#x27;font.sans-serif&#x27;</span>] = [<span class="string">&#x27;SimHei&#x27;</span>] <span class="comment">#替换sans-serif字体为SimHei</span></span><br><span class="line">plt.rcParams[<span class="string">&#x27;axes.unicode_minus&#x27;</span>] = <span class="literal">False</span> <span class="comment">#解决坐标轴负数的负号显示问题</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">y = [random.randint(<span class="number">20</span>,<span class="number">35</span>) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">120</span>)]</span><br><span class="line">x = range(<span class="number">0</span>,<span class="number">120</span>)</span><br><span class="line">plt.plot(x,y)</span><br><span class="line"><span class="comment"># x刻度显示需求 十点0分 十点10分......</span></span><br><span class="line"><span class="comment"># 设置刻度</span></span><br><span class="line">xt = range(<span class="number">0</span>,<span class="number">120</span>,<span class="number">10</span>)</span><br><span class="line">xl1 = [<span class="string">f&quot;十点<span class="subst">&#123;i&#125;</span>分&quot;</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">60</span>,<span class="number">10</span>)]</span><br><span class="line">xl2 = [<span class="string">f&quot;十一点<span class="subst">&#123;i&#125;</span>分&quot;</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">60</span>,<span class="number">10</span>)]</span><br><span class="line">xl = xl1 + xl2</span><br><span class="line">plt.xticks(xt,xl,rotation = <span class="number">45</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#局部设置字体</span></span><br><span class="line"><span class="keyword">from</span> matplotlib.font_manager <span class="keyword">import</span>  FontProperties</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line">font = FontProperties(fname = <span class="string">r&quot;C:/Windows/Fonts/simsun.ttc&quot;</span>,size = <span class="number">14</span>)</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">y = [random.randint(<span class="number">20</span>,<span class="number">35</span>) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">120</span>)]</span><br><span class="line">x = range(<span class="number">0</span>,<span class="number">120</span>)</span><br><span class="line">plt.plot(x,y)</span><br><span class="line"><span class="comment"># x刻度显示需求 十点0分 十点10分......</span></span><br><span class="line"><span class="comment"># 设置刻度</span></span><br><span class="line">xt = range(<span class="number">0</span>,<span class="number">120</span>,<span class="number">10</span>)</span><br><span class="line">xl1 = [<span class="string">f&quot;十点<span class="subst">&#123;i&#125;</span>分&quot;</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">60</span>,<span class="number">10</span>)]</span><br><span class="line">xl2 = [<span class="string">f&quot;十一点<span class="subst">&#123;i&#125;</span>分&quot;</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">60</span>,<span class="number">10</span>)]</span><br><span class="line">xl = xl1 + xl2</span><br><span class="line">plt.xticks(xt,xl,rotation = <span class="number">45</span>,fontproperties = font)<span class="comment">#局部设置字体 fontproperties = font</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>文本坐标注释</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">x = [i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>)]</span><br><span class="line">y = [random.randint(<span class="number">10</span>,<span class="number">30</span>) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>)]</span><br><span class="line"><span class="comment"># label可以设置曲线注释</span></span><br><span class="line">plt.plot(x,y,marker = <span class="string">&quot;.&quot;</span>,label = <span class="string">&quot;text&quot;</span>)</span><br><span class="line"><span class="comment">#给第一个点添加注释文本 传入注释文本 点坐标 文本坐标  arrowprops为箭头 可以不加</span></span><br><span class="line"><span class="comment"># plt.annotate(&quot;(0,20)&quot;,xy=(0,20),xytext=(0,20),arrowprops = &#123;&quot;width&quot;:1&#125;)</span></span><br><span class="line"><span class="comment">#每个点都实现注释文本</span></span><br><span class="line"><span class="keyword">for</span> xi,yi <span class="keyword">in</span> list(zip(x,y)):</span><br><span class="line">    plt.annotate(<span class="string">f&quot;<span class="subst">&#123;(xi,yi)&#125;</span>&quot;</span>,xy=(xi,yi),xytext=(xi,yi))</span><br><span class="line">plt.legend()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<h3 id="散点图"><a href="#散点图" class="headerlink" title="散点图"></a>散点图</h3><ul>
+<li>plt.scatter(x,y)</li>
+<li>可以查看查看规律</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">y_4 = [<span class="number">11</span>,<span class="number">17</span>,<span class="number">16</span>,<span class="number">11</span>,<span class="number">12</span>,<span class="number">11</span>,<span class="number">12</span>,<span class="number">13</span>,<span class="number">10</span>,<span class="number">14</span>,<span class="number">8</span>,<span class="number">13</span>,<span class="number">12</span>,<span class="number">15</span>,<span class="number">14</span>,<span class="number">17</span>,<span class="number">18</span>,<span class="number">21</span>,<span class="number">16</span>,<span class="number">17</span>,<span class="number">30</span>,<span class="number">14</span>,<span class="number">15</span>,<span class="number">15</span>,<span class="number">15</span>,<span class="number">19</span>,<span class="number">21</span>,<span class="number">22</span>,<span class="number">22</span>,<span class="number">22</span>,<span class="number">23</span>]</span><br><span class="line">y_10 = [<span class="number">26</span>,<span class="number">26</span>,<span class="number">28</span>,<span class="number">19</span>,<span class="number">21</span>,<span class="number">17</span>,<span class="number">16</span>,<span class="number">19</span>,<span class="number">18</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">19</span>,<span class="number">22</span>,<span class="number">23</span>,<span class="number">17</span>,<span class="number">20</span>,<span class="number">21</span>,<span class="number">20</span>,<span class="number">22</span>,<span class="number">15</span>,<span class="number">11</span>,<span class="number">15</span>,<span class="number">5</span>,<span class="number">13</span>,<span class="number">15</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">13</span>,<span class="number">12</span>,<span class="number">13</span>,<span class="number">6</span>]</span><br><span class="line">x = range(<span class="number">1</span>,<span class="number">32</span>)</span><br><span class="line">plt.scatter(x,y_4)</span><br><span class="line">plt.scatter(x,y_10)</span><br></pre></td></tr></table></figure>
+
+<h3 id="条形图"><a href="#条形图" class="headerlink" title="条形图"></a>条形图</h3><ul>
+<li>plt.bar(x,y)</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">plt.bar?? </span></span><br><span class="line"><span class="string">x: x坐标点</span></span><br><span class="line"><span class="string">y: hight 高度 </span></span><br><span class="line"><span class="string">width ：宽度 默认0.8</span></span><br><span class="line"><span class="string">bottom 基线 默认是0 改变hight起始值</span></span><br><span class="line"><span class="string">align：对齐方式 默认center中间 若align = &quot;edge&quot;则在边缘 其中width为负值则在左边</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>分组条形图：水果 Q1销售额 Q2销售额 苹果 1000 1200 梨 800 700 车厘子 3000 2800</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> matplotlib.font_manager <span class="keyword">import</span>  FontProperties</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">font = FontProperties(fname = <span class="string">r&quot;C:/Windows/Fonts/simsun.ttc&quot;</span>,size = <span class="number">14</span>)</span><br><span class="line">shuiguo = [<span class="string">&quot;苹果&quot;</span>,<span class="string">&quot;梨&quot;</span>,<span class="string">&quot;车厘子&quot;</span>]</span><br><span class="line">Q1_S = [<span class="number">1000</span>,<span class="number">800</span>,<span class="number">3000</span>]</span><br><span class="line">Q2_S = [<span class="number">1200</span>,<span class="number">700</span>,<span class="number">2800</span>]</span><br><span class="line"><span class="comment"># plt.bar(shuiguo,Q1_S)</span></span><br><span class="line"><span class="comment"># plt.bar(shuiguo,Q2_S)</span></span><br><span class="line">width = <span class="number">0.35</span></span><br><span class="line"><span class="comment"># plt.bar(list(range(len(shuiguo))),Q1_S,width = width)</span></span><br><span class="line"><span class="comment"># plt.bar(list(range(len(shuiguo))),Q2_S,width = width)</span></span><br><span class="line"><span class="comment">#蓝黄柱子宽度设定完成 实现左右平移</span></span><br><span class="line"><span class="comment"># 蓝色&#123;0,1,2&#125; 左移 -width/2</span></span><br><span class="line"><span class="comment"># 橘色右移 +width/2</span></span><br><span class="line">po_l = [i-width/<span class="number">2</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(len(shuiguo))]</span><br><span class="line">plt.bar(po_l,Q1_S,width=width,label = <span class="string">&quot;Q1_S&quot;</span>)</span><br><span class="line">po_r = [i+width/<span class="number">2</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(len(shuiguo))]</span><br><span class="line">plt.bar(po_r,Q2_S,width=width,label = <span class="string">&quot;Q2_S&quot;</span>)</span><br><span class="line"><span class="comment">#添加图例</span></span><br><span class="line">plt.legend()</span><br><span class="line"><span class="comment">#添加刻度</span></span><br><span class="line">plt.xticks(range(len(shuiguo)),shuiguo,fontproperties = font)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>堆叠条形图 使用bottom进行堆叠</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> matplotlib.font_manager <span class="keyword">import</span>  FontProperties</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">font = FontProperties(fname = <span class="string">r&quot;C:/Windows/Fonts/simsun.ttc&quot;</span>,size = <span class="number">14</span>)</span><br><span class="line">shuiguo = [<span class="string">&quot;苹果&quot;</span>,<span class="string">&quot;梨&quot;</span>,<span class="string">&quot;车厘子&quot;</span>]</span><br><span class="line">Q1_S = [<span class="number">1000</span>,<span class="number">800</span>,<span class="number">3000</span>]</span><br><span class="line">Q2_S = [<span class="number">1200</span>,<span class="number">700</span>,<span class="number">2800</span>]</span><br><span class="line">plt.bar(shuiguo,Q1_S,width=<span class="number">0.5</span>,label=<span class="string">&quot;Q1&quot;</span>)</span><br><span class="line">plt.bar(shuiguo,Q2_S,width=<span class="number">0.5</span>,label=<span class="string">&quot;Q2&quot;</span>,bottom = Q1_S) <span class="comment">#bottom以第一季度为基础堆叠</span></span><br><span class="line">plt.legend()</span><br><span class="line">plt.xticks(range(len(shuiguo)),shuiguo,fontproperties = font)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>水平条形图 plt.barh</li>
+<li>y 为原本的x width 是数值大小 height是宽</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> matplotlib.font_manager <span class="keyword">import</span>  FontProperties</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">font = FontProperties(fname = <span class="string">r&quot;C:/Windows/Fonts/simsun.ttc&quot;</span>,size = <span class="number">14</span>)</span><br><span class="line">shuiguo = [<span class="string">&quot;苹果&quot;</span>,<span class="string">&quot;梨&quot;</span>,<span class="string">&quot;车厘子&quot;</span>]</span><br><span class="line">Q1_S = [<span class="number">1000</span>,<span class="number">800</span>,<span class="number">3000</span>]</span><br><span class="line">Q2_S = [<span class="number">1200</span>,<span class="number">700</span>,<span class="number">2800</span>]</span><br><span class="line"><span class="comment"># plt.bar(shuiguo,Q1_S)</span></span><br><span class="line"><span class="comment"># plt.bar(shuiguo,Q2_S)</span></span><br><span class="line">width = <span class="number">0.35</span></span><br><span class="line"><span class="comment"># plt.bar(list(range(len(shuiguo))),Q1_S,width = width)</span></span><br><span class="line"><span class="comment"># plt.bar(list(range(len(shuiguo))),Q2_S,width = width)</span></span><br><span class="line"><span class="comment">#蓝黄柱子宽度设定完成 实现左右平移</span></span><br><span class="line"><span class="comment"># 蓝色&#123;0,1,2&#125; 下移 -width/2</span></span><br><span class="line"><span class="comment"># 橘色上移 +width/2</span></span><br><span class="line">po_l = [i-width/<span class="number">2</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(len(shuiguo))]</span><br><span class="line">plt.barh(po_l,Q1_S,height=width,label = <span class="string">&quot;Q1_S&quot;</span>)</span><br><span class="line">po_r = [i+width/<span class="number">2</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(len(shuiguo))]</span><br><span class="line">plt.barh(po_r,Q2_S,height=width,label = <span class="string">&quot;Q2_S&quot;</span>)</span><br><span class="line"><span class="comment">#添加图例</span></span><br><span class="line">plt.legend()</span><br><span class="line"><span class="comment">#添加刻度</span></span><br><span class="line">plt.yticks(range(len(shuiguo)),shuiguo,fontproperties = font)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<h3 id="直方图"><a href="#直方图" class="headerlink" title="直方图"></a>直方图</h3><ul>
+<li><p>plt.hist（x,bins） x 数据 bins 组数 直方图的组数 长条形的数目</p>
+</li>
+<li><p>频数直方图</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line">temp_li = [<span class="number">6.9</span>,<span class="number">4.1</span>,<span class="number">6.6</span>,<span class="number">5.2</span>,<span class="number">6.4</span>,<span class="number">7.9</span>,<span class="number">8.6</span>,<span class="number">3.0</span>,<span class="number">4.4</span>,<span class="number">6.7</span>,<span class="number">7.1</span>,<span class="number">4.7</span>,<span class="number">9.1</span>,<span class="number">6.8</span>,<span class="number">8.6</span>,<span class="number">5.2</span>,<span class="number">5.8</span>,<span class="number">7.9</span>,<span class="number">5.6</span>,<span class="number">8.8</span>,<span class="number">8.1</span>,<span class="number">5.7</span>,<span class="number">8.4</span>,<span class="number">4.1</span>,<span class="number">6.4</span>,<span class="number">6.2</span>,<span class="number">5.2</span>,<span class="number">6.8</span>,<span class="number">5.6</span>,<span class="number">5.6</span>,<span class="number">6.8</span>,<span class="number">8.2</span>,<span class="number">6.4</span>,<span class="number">4.8</span>,<span class="number">6.9</span>,<span class="number">7.1</span>,<span class="number">9.7</span>,<span class="number">6.4</span>,<span class="number">7.3</span>,<span class="number">6.8</span>,<span class="number">7.1</span>,<span class="number">4.8</span>,<span class="number">5.8</span>,<span class="number">6.5</span>,<span class="number">5.9</span>,<span class="number">7.3</span>,<span class="number">5.5</span>,<span class="number">7.4</span>,<span class="number">6.2</span>,<span class="number">7.7</span>]</span><br><span class="line"><span class="comment"># print(max(temp_li))  9.7</span></span><br><span class="line"><span class="comment"># print(min(temp_li))  3.0</span></span><br><span class="line"><span class="comment">#可以分7组 组距为1</span></span><br><span class="line"><span class="comment">#计算极差</span></span><br><span class="line">cha = max(temp_li) - min(temp_li)</span><br><span class="line"><span class="comment">#自定义组距</span></span><br><span class="line">b = <span class="number">1</span></span><br><span class="line"><span class="comment">#求组数</span></span><br><span class="line">bi = round(cha/b)</span><br><span class="line"><span class="comment">#频数直方图</span></span><br><span class="line">plt.hist(temp_li,bi)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>频率直方图</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line">temp_li = [<span class="number">6.9</span>,<span class="number">4.1</span>,<span class="number">6.6</span>,<span class="number">5.2</span>,<span class="number">6.4</span>,<span class="number">7.9</span>,<span class="number">8.6</span>,<span class="number">3.0</span>,<span class="number">4.4</span>,<span class="number">6.7</span>,<span class="number">7.1</span>,<span class="number">4.7</span>,<span class="number">9.1</span>,<span class="number">6.8</span>,<span class="number">8.6</span>,<span class="number">5.2</span>,<span class="number">5.8</span>,<span class="number">7.9</span>,<span class="number">5.6</span>,<span class="number">8.8</span>,<span class="number">8.1</span>,<span class="number">5.7</span>,<span class="number">8.4</span>,<span class="number">4.1</span>,<span class="number">6.4</span>,<span class="number">6.2</span>,<span class="number">5.2</span>,<span class="number">6.8</span>,<span class="number">5.6</span>,<span class="number">5.6</span>,<span class="number">6.8</span>,<span class="number">8.2</span>,<span class="number">6.4</span>,<span class="number">4.8</span>,<span class="number">6.9</span>,<span class="number">7.1</span>,<span class="number">9.7</span>,<span class="number">6.4</span>,<span class="number">7.3</span>,<span class="number">6.8</span>,<span class="number">7.1</span>,<span class="number">4.8</span>,<span class="number">5.8</span>,<span class="number">6.5</span>,<span class="number">5.9</span>,<span class="number">7.3</span>,<span class="number">5.5</span>,<span class="number">7.4</span>,<span class="number">6.2</span>,<span class="number">7.7</span>]</span><br><span class="line"><span class="comment"># print(max(temp_li))  9.7</span></span><br><span class="line"><span class="comment"># print(min(temp_li))  3.0</span></span><br><span class="line"><span class="comment">#可以分7组 组距为1</span></span><br><span class="line"><span class="comment">#计算极差</span></span><br><span class="line">cha = max(temp_li) - min(temp_li)</span><br><span class="line"></span><br><span class="line"><span class="comment">#自定义组距</span></span><br><span class="line">b = <span class="number">1</span></span><br><span class="line"><span class="comment">#求组数</span></span><br><span class="line">bi = round(cha/b)</span><br><span class="line"><span class="comment">#频率直方图</span></span><br><span class="line">plt.hist(temp_li,bi,density=<span class="literal">True</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<h3 id="扇形图"><a href="#扇形图" class="headerlink" title="扇形图"></a>扇形图</h3><ul>
+<li><p>plt.pie(比例，标签，标签原理中心程度)</p>
+</li>
+<li><p>扇形图通过**pie()**函数绘制</p>
+<ul>
+<li><p><strong>plt.pie(**</strong>x,** <strong>explode=None, labels=None)</strong>          </p>
+</li>
+<li><ul>
+<li>x       扇形数据</li>
+<li>explode 设置某几个分块是否要分离饼图</li>
+<li>labels   每块扇形标签</li>
+<li>autopct 百分比数据标签   </li>
+<li>shadow  是否显示阴影</li>
+</ul>
+</li>
+<li><p><strong>plt.pie()有3个返回值</strong></p>
+</li>
+<li><ul>
+<li>patches 绘制饼图每一块的对象</li>
+<li>texts 文本的列表</li>
+<li>autotexts 百分比的文本列表</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line">frac = [<span class="number">1</span>/<span class="number">50</span>,<span class="number">6</span>/<span class="number">50</span>,<span class="number">11</span>/<span class="number">50</span>,<span class="number">15</span>/<span class="number">50</span>,<span class="number">9</span>/<span class="number">50</span>,<span class="number">6</span>/<span class="number">50</span>,<span class="number">2</span>/<span class="number">50</span>]</span><br><span class="line"><span class="comment">#扇形标签</span></span><br><span class="line">label = [<span class="string">&#x27;[3,4]&#x27;</span>,<span class="string">&#x27;(4,5]&#x27;</span>,<span class="string">&#x27;(5,6]&#x27;</span>,<span class="string">&#x27;(6,7]&#x27;</span>,<span class="string">&#x27;(7,8]&#x27;</span>,<span class="string">&#x27;(8,9]&#x27;</span>,<span class="string">&#x27;(9,10]&#x27;</span>]</span><br><span class="line"><span class="comment">#explode 远离中心程度 必须是元祖，有多少块写多少块</span></span><br><span class="line">explode = [<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>]</span><br><span class="line"><span class="comment">#绘制饼图</span></span><br><span class="line">res = plt.pie(frac,labels=label,explode=explode,autopct=<span class="string">&#x27;%.2f%%&#x27;</span>)</span><br><span class="line">pathes,text,autotext = res</span><br><span class="line">print(pathes)  <span class="comment">#扇形对象</span></span><br><span class="line">print(text)    <span class="comment">#每个文本对象</span></span><br><span class="line">print(autotext) <span class="comment">#每个百分比对象</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#需求 修改百分比对象字体颜色</span></span><br><span class="line"><span class="comment"># for color in autotext:</span></span><br><span class="line"><span class="comment">#     autotext.set_color(&quot;w&quot;) #设置字体颜色</span></span><br><span class="line">plt.setp(autotext,size = <span class="number">8</span> ,weight=<span class="string">&quot;bold&quot;</span>,color=<span class="string">&quot;w&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#添加图例  BBOX x y weight height</span></span><br><span class="line">plt.legend(loc=<span class="string">&quot;upper right&quot;</span>,bbox_to_anchor=(<span class="number">0.8</span>,<span class="number">0</span>,<span class="number">0.5</span>,<span class="number">1</span>))</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<h3 id="雷达图"><a href="#雷达图" class="headerlink" title="雷达图"></a>雷达图</h3><ul>
+<li><p>雷达图（Radar Chart）又被叫做蜘蛛网图，适用于显示三个或更多的维度的变量的强弱情况。比如某个企业在哪些业务方面的投入等，都可以用雷达图方便的表示。</p>
+</li>
+<li><p>通过<code>plt.polar</code>来绘制雷达图，这个方法的参数跟<code>plt.plot</code>非常的类似，只不过是<code>x</code>轴的坐标点应该为弧度（2*PI=360°）。</p>
+</li>
+<li><p>注意：</p>
+<ul>
+<li>因为<code>polar</code>并不会完成线条的闭合绘制，所以我们在绘制的时候需要在<code>theta</code>中和<code>values</code>中在最后多重复添加第0个位置的值，然后在绘制的时候就可以和第1个点进行闭合了。</li>
+<li><code>polar</code>只是绘制线条，所以如果想要把里面进行颜色填充，那么需要调用<code>fill</code>函数来实现。</li>
+<li><code>polar</code>默认的圆圈的坐标是角度，如果我们想要改成文字显示，那么可以通过<code>xticks</code>来设置。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">quaters = [<span class="string">&#x27;Q1&#x27;</span>,<span class="string">&#x27;Q2&#x27;</span>,<span class="string">&#x27;Q3&#x27;</span>,<span class="string">&#x27;Q4&#x27;</span>,<span class="string">&#x27;Q5&#x27;</span>,<span class="string">&#x27;Q6&#x27;</span>,<span class="string">&#x27;Q7&#x27;</span>]</span><br><span class="line">sales = [<span class="number">40</span>,<span class="number">91</span>,<span class="number">44</span>,<span class="number">90</span>,<span class="number">20</span>,<span class="number">54</span>,<span class="number">80</span>]</span><br><span class="line"><span class="comment">#求弧度 需求将2PI分成7份</span></span><br><span class="line"><span class="comment">#等分为多少分</span></span><br><span class="line">angles = list(np.linspace(<span class="number">0</span>,<span class="number">2</span>*np.pi,len(sales),endpoint=<span class="literal">False</span>))</span><br><span class="line"><span class="comment"># plt.polar(angles,sales)</span></span><br><span class="line"><span class="comment">#数据处理 将雷达图尾部与头部连接</span></span><br><span class="line"><span class="comment">#给弧度列表添加数据：第一个点的弧度</span></span><br><span class="line">angles.append(angles[<span class="number">0</span>])</span><br><span class="line">sales.append(sales[<span class="number">0</span>])</span><br><span class="line">quaters.append(quaters[<span class="number">0</span>])</span><br><span class="line">plt.polar(angles,sales,color=<span class="string">&#x27;purple&#x27;</span>,linewidth=<span class="number">1</span>,marker=<span class="string">&#x27;.&#x27;</span>)</span><br><span class="line"><span class="comment">#填充颜色和颜色深浅</span></span><br><span class="line">plt.fill(angles,sales,facecolor=<span class="string">&#x27;red&#x27;</span>,alpha=<span class="number">0.2</span>)</span><br><span class="line"><span class="comment">#设置刻度</span></span><br><span class="line">plt.xticks(angles,quaters)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<h3 id="箱型图"><a href="#箱型图" class="headerlink" title="箱型图"></a>箱型图</h3><p><strong>箱线图</strong>是一种直观简洁的方式去<strong>呈现一组数据的分布</strong>。 箱线图广泛用于各个数据分析领域，它能非常简单明了地显示一组数据中<strong>5个重要数值，</strong>并且还能发现一组数据中的存在的<strong>异常值</strong>。</p>
+<ul>
+<li>最大值 </li>
+<li>最小值</li>
+<li>中位数</li>
+<li>下四分位数(Q1)</li>
+<li>上四分位数(Q3)</li>
+</ul>
+<p><strong>plt.boxplot()</strong></p>
+<ul>
+<li>x：需要绘制的箱型图的数据</li>
+<li>notch：是否展示置信区间 默认为False</li>
+<li>sym：代表异常点的符号表示 默认为圆点</li>
+<li>vert：是否是垂直的 默认是True</li>
+<li>whis：上下限系数 默认为1.5</li>
+<li>positions：设置每个盒子的位置</li>
+<li>widths：设置每个盒子的宽度</li>
+<li>labels：每个盒子的label </li>
+<li>meanline和showmean：都为True的时候 会展示平均线</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line">data = [random.randint(<span class="number">1</span>,<span class="number">100</span>) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100</span>)]</span><br><span class="line">data.extend([<span class="number">-100</span>,<span class="number">500</span>,<span class="number">400</span>,<span class="number">200</span>,<span class="number">-300</span>])</span><br><span class="line"><span class="comment"># sym异常点设置  meanline 均值 showmeans显示均值 vert显示倒转</span></span><br><span class="line">plt.boxplot(data,sym=<span class="string">&#x27;.&#x27;</span>,widths=<span class="number">0.2</span>,meanline=<span class="literal">True</span>,showmeans=<span class="literal">True</span>,vert=<span class="literal">True</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">三三不得酒吖</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://yinshaoxuan.github.io/2021/01/25/matplotlib/">https://yinshaoxuan.github.io/2021/01/25/matplotlib/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://yinshaoxuan.github.io" target="_blank">斯人若彩虹，遇上方知有</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Python%E5%AD%A6%E4%B9%A0/">Python学习</a><a class="post-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a><a class="post-meta__tags" href="/tags/Matplotlib/">Matplotlib</a><a class="post-meta__tags" href="/tags/%E5%88%B6%E5%9B%BE/">制图</a></div><div class="post_share"><div class="social-share" data-image="https://s1.ax1x.com/2020/08/11/aO5rBq.jpg" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/01/25/numpy/"><img class="prev-cover" data-lazy-src="https://s1.ax1x.com/2020/08/11/aO5rBq.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">numpy</div></div></a></div><div class="next-post pull-right"><a href="/2021/01/06/modehash/"><img class="next-cover" data-lazy-src="https://s1.ax1x.com/2020/08/11/aO5rBq.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">modehash</div></div></a></div></nav><div class="relatedPosts"><div class="relatedPosts_headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts_list"><div class="relatedPosts_item"><a href="/2021/01/25/pandas/" title="pandas"><img class="relatedPosts_cover" data-lazy-src="https://s1.ax1x.com/2020/08/11/aO5rBq.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2021-01-25</div><div class="relatedPosts_title">pandas</div></div></a></div><div class="relatedPosts_item"><a href="/2021/01/25/numpy/" title="numpy"><img class="relatedPosts_cover" data-lazy-src="https://s1.ax1x.com/2020/08/11/aO5rBq.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2021-01-25</div><div class="relatedPosts_title">numpy</div></div></a></div><div class="relatedPosts_item"><a href="/2020/08/12/Basic-data-type/" title="Basic-data-type"><img class="relatedPosts_cover" data-lazy-src="https://s1.ax1x.com/2020/08/11/aO5rBq.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2020-08-12</div><div class="relatedPosts_title">Basic-data-type</div></div></a></div><div class="relatedPosts_item"><a href="/2020/08/09/Python-essentials/" title="Python-essentials"><img class="relatedPosts_cover" data-lazy-src="https://s1.ax1x.com/2020/08/11/aO5rBq.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2020-08-09</div><div class="relatedPosts_title">Python-essentials</div></div></a></div><div class="relatedPosts_item"><a href="/2020/08/13/Operator/" title="运算符"><img class="relatedPosts_cover" data-lazy-src="https://s1.ax1x.com/2020/08/11/aO5rBq.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2020-08-13</div><div class="relatedPosts_title">运算符</div></div></a></div><div class="relatedPosts_item"><a href="/2020/10/30/bs4/" title="bs4"><img class="relatedPosts_cover" data-lazy-src="https://s1.ax1x.com/2020/08/11/aO5rBq.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-30</div><div class="relatedPosts_title">bs4</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></article></main><footer id="footer" style="background-image: url(https://s1.ax1x.com/2020/08/11/aO5rBq.jpg)" data-type="photo"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By 三三不得酒吖</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font_plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font_minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module" defer></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js" async></script><script>var endLoading = function () {
+  document.body.style.overflow = 'auto';
+  document.getElementById('loading-box').classList.add("loaded")
+}
+window.addEventListener('load',endLoading)</script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    window.valine = new Valine({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+    });
+    if ('nick,mail') { valine.config.requiredFields= 'nick,mail'.split(',') }
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else $.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) loadComment(document.querySelector('#vcomment'),loadValine)
+  else setTimeout(() => loadValine(), 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><canvas class="fireworks"></canvas><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="/js/third-party/fireworks.js"></script></div></body></html>
