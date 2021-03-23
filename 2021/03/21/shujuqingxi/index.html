@@ -1,0 +1,382 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>数据清洗 | 斯人若彩虹，遇上方知有</title><meta name="description" content="Pandas数据清洗数据清洗介绍数据清洗实际上也是数据质量分析，检查原始数据中是否存在脏数据(不符合要求，或者不能直接进行分析的数据)，并且处理脏数据。 常见情况如下  缺失值 异常值 重复数据  处理缺失值Pandas使用浮点值NaN(not a Number)表示缺失值，并且缺失值在数据中时常出现。那么Pandas的目的之一就是**”无痛地”**处理缺失值。 判断数据是否为NaN pd.isn"><meta name="keywords" content="Python学习,数据分析,Pandas"><meta name="author" content="三三不得酒吖"><meta name="copyright" content="三三不得酒吖"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/cat.png"><link rel="canonical" href="https://yinshaoxuan.github.io/2021/03/21/shujuqingxi/"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin="crossorigin"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta property="og:type" content="article"><meta property="og:title" content="数据清洗"><meta property="og:url" content="https://yinshaoxuan.github.io/2021/03/21/shujuqingxi/"><meta property="og:site_name" content="斯人若彩虹，遇上方知有"><meta property="og:description" content="Pandas数据清洗数据清洗介绍数据清洗实际上也是数据质量分析，检查原始数据中是否存在脏数据(不符合要求，或者不能直接进行分析的数据)，并且处理脏数据。 常见情况如下  缺失值 异常值 重复数据  处理缺失值Pandas使用浮点值NaN(not a Number)表示缺失值，并且缺失值在数据中时常出现。那么Pandas的目的之一就是**”无痛地”**处理缺失值。 判断数据是否为NaN pd.isn"><meta property="og:image" content="https://s1.ax1x.com/2020/08/11/aO5rBq.jpg"><meta property="article:published_time" content="2021-03-21T12:59:12.000Z"><meta property="article:modified_time" content="2021-03-22T14:29:31.944Z"><meta name="twitter:card" content="summary"><script>var activateDarkMode = function () {
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#000')
+  }
+}
+var activateLightMode = function () {
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#fff')
+  }
+}
+
+var getCookies = function (name) {
+  const value = `; ${document.cookie}`
+  const parts = value.split(`; ${name}=`)
+  if (parts.length === 2) return parts.pop().split(';').shift()
+}
+
+var autoChangeMode = 'false'
+var t = getCookies('theme')
+if (autoChangeMode === '1') {
+  var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+  var isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+  var isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined) {
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport) {
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour <= 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+    }
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+      if (Cookies.get('theme') === undefined) {
+        e.matches ? activateDarkMode() : activateLightMode()
+      }
+    })
+  } else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else if (autoChangeMode === '2') {
+  now = new Date()
+  hour = now.getHours()
+  isNight = hour <= 6 || hour >= 18
+  if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else {
+  if (t === 'dark') activateDarkMode()
+  else if (t === 'light') activateLightMode()
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: false,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isanchor: false    
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2021-03-22 22:29:31'
+}</script><noscript><style>
+#nav {
+  opacity: 1
+}
+.justified-gallery img {
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 5.0.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" data-lazy-src="/img/cat.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">46</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">58</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">1</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Pandas%E6%95%B0%E6%8D%AE%E6%B8%85%E6%B4%97"><span class="toc-number">1.</span> <span class="toc-text">Pandas数据清洗</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%B8%85%E6%B4%97%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.1.</span> <span class="toc-text">数据清洗介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%84%E7%90%86%E7%BC%BA%E5%A4%B1%E5%80%BC"><span class="toc-number">1.2.</span> <span class="toc-text">处理缺失值</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A4%E6%96%AD%E6%95%B0%E6%8D%AE%E6%98%AF%E5%90%A6%E4%B8%BANaN"><span class="toc-number">1.2.1.</span> <span class="toc-text">判断数据是否为NaN</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%87%E6%BB%A4%E7%BC%BA%E5%A4%B1%E5%80%BC"><span class="toc-number">1.2.2.</span> <span class="toc-text">过滤缺失值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%A5%E5%85%A8%E7%BC%BA%E5%A4%B1%E5%80%BC-NaN"><span class="toc-number">1.2.3.</span> <span class="toc-text">补全缺失值(NaN)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%82%E5%B8%B8%E5%80%BC"><span class="toc-number">1.3.</span> <span class="toc-text">异常值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%84%E7%90%86%E9%87%8D%E5%A4%8D%E6%95%B0%E6%8D%AE"><span class="toc-number">1.4.</span> <span class="toc-text">处理重复数据</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A4%E6%96%AD%E9%87%8D%E5%A4%8D%E5%80%BC"><span class="toc-number">1.4.1.</span> <span class="toc-text">判断重复值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E9%87%8D%E5%A4%8D%E5%80%BC"><span class="toc-number">1.4.2.</span> <span class="toc-text">删除重复值</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A6%BB%E6%95%A3%E5%8C%96"><span class="toc-number">1.5.</span> <span class="toc-text">离散化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E5%91%BD%E5%90%8D%E8%BD%B4%E7%B4%A2%E5%BC%95"><span class="toc-number">1.6.</span> <span class="toc-text">重命名轴索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%91%E9%87%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%BD%E6%95%B0"><span class="toc-number">1.7.</span> <span class="toc-text">向量化字符串函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E8%99%9A%E6%8B%9F%E5%8F%98%E9%87%8F"><span class="toc-number">1.8.</span> <span class="toc-text">计算虚拟变量</span></a></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://s1.ax1x.com/2020/08/11/aO5rBq.jpg)"><nav id="nav"><span class="pull-left" id="blog_name"><a class="blog_title" id="site-name" href="/">斯人若彩虹，遇上方知有</a></span><span class="pull-right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div></div><span class="toggle-menu close"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">数据清洗</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-03-21T12:59:12.000Z" title="发表于 2021-03-21 20:59:12">2021-03-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-03-22T14:29:31.944Z" title="更新于 2021-03-22 22:29:31">2021-03-22</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2021/03/21/shujuqingxi/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count comment-count" data-xid="/2021/03/21/shujuqingxi/" itemprop="commentCount"></span></a></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h2 id="Pandas数据清洗"><a href="#Pandas数据清洗" class="headerlink" title="Pandas数据清洗"></a>Pandas数据清洗</h2><h3 id="数据清洗介绍"><a href="#数据清洗介绍" class="headerlink" title="数据清洗介绍"></a>数据清洗介绍</h3><p>数据清洗实际上也是<strong>数据质量分析</strong>，检查原始数据中是否存在<strong>脏数据</strong>(不符合要求，或者不能直接进行分析的数据)，并且处理脏数据。</p>
+<p>常见情况如下</p>
+<ul>
+<li>缺失值</li>
+<li>异常值</li>
+<li>重复数据</li>
+</ul>
+<h3 id="处理缺失值"><a href="#处理缺失值" class="headerlink" title="处理缺失值"></a>处理缺失值</h3><p>Pandas使用浮点值NaN(not a Number)表示缺失值，并且缺失值在数据中时常出现。那么Pandas的目的之一就是**”无痛地”**处理缺失值。</p>
+<h4 id="判断数据是否为NaN"><a href="#判断数据是否为NaN" class="headerlink" title="判断数据是否为NaN"></a>判断数据是否为NaN</h4><ul>
+<li>pd.isnull(df)      返回哪些值是缺失值的布尔值</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">df = pd.DataFrame(np.arange(<span class="number">16</span>).reshape(<span class="number">4</span>,<span class="number">4</span>),index=[<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;b&#x27;</span>,<span class="string">&#x27;c&#x27;</span>,<span class="string">&#x27;d&#x27;</span>])</span><br><span class="line"><span class="comment"># print(df)</span></span><br><span class="line">print(pd.isna(df[:<span class="number">2</span>]))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">       0      1      2      3</span><br><span class="line">a  False  False  False  False</span><br><span class="line">b  False  False  False  False</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>pd.notnull(df)     返回值是isnull的反集</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line">df &#x3D; pd.DataFrame(np.arange(16).reshape(4,4),index&#x3D;[&#39;a&#39;,&#39;b&#39;,&#39;c&#39;,&#39;d&#39;])</span><br><span class="line"># print(df)</span><br><span class="line">print(pd.isna(df))</span><br><span class="line">print(pd.notna(df))</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">      <span class="number">0</span>     <span class="number">1</span>     <span class="number">2</span>     <span class="number">3</span></span><br><span class="line">a  <span class="literal">True</span>  <span class="literal">True</span>  <span class="literal">True</span>  <span class="literal">True</span></span><br><span class="line">b  <span class="literal">True</span>  <span class="literal">True</span>  <span class="literal">True</span>  <span class="literal">True</span></span><br><span class="line">c  <span class="literal">True</span>  <span class="literal">True</span>  <span class="literal">True</span>  <span class="literal">True</span></span><br><span class="line">d  <span class="literal">True</span>  <span class="literal">True</span>  <span class="literal">True</span>  <span class="literal">True</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>注意</strong></p>
+<ul>
+<li>Python内建的None值也被当作NaN</li>
+</ul>
+<h4 id="过滤缺失值"><a href="#过滤缺失值" class="headerlink" title="过滤缺失值"></a>过滤缺失值</h4><ul>
+<li><p><strong>dropna(axis=0,how=’any’,inplace=False)</strong></p>
+</li>
+<li><ul>
+<li>axis    指定轴  默认为0 代表行</li>
+<li>how    默认为any 代表删除含有NaN的行  当为all 时代表删除所有值为NaN的行</li>
+<li>inplace 修改被调用的对象 而不是一个备份</li>
+</ul>
+</li>
+<li><pre><code class="python">import pandas as pd
+import numpy as np
+df = pd.DataFrame(np.arange(16).reshape(4,4),index=[&#39;a&#39;,&#39;b&#39;,&#39;c&#39;,&#39;d&#39;])
+
+df.loc[&#39;a&#39;] = np.nan
+df.loc[&#39;b&#39;,1] = np.nan
+print(df)
+df.dropna(axis=0,how=&#39;any&#39;,inplace=True)
+print(df)
+&lt;!--hexoPostRenderEscape:&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;:hexoPostRenderEscape--&gt;
+    0     1     2     3
+a   NaN   NaN   NaN   NaN
+b   4.0   NaN   6.0   7.0
+c   8.0   9.0  10.0  11.0
+d  12.0  13.0  14.0  15.0
+    0     1     2     3
+c   8.0   9.0  10.0  11.0
+d  12.0  13.0  14.0  15.0
+&lt;!--hexoPostRenderEscape:&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#96;&amp;#96;&amp;#96;python&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;import pandas as pd&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;import numpy as np&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;df &amp;#x3D; pd.DataFrame(np.arange(16).reshape(4,4),index&amp;#x3D;[&amp;#39;a&amp;#39;,&amp;#39;b&amp;#39;,&amp;#39;c&amp;#39;,&amp;#39;d&amp;#39;])&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# print(df)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# print(pd.isna(df))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# # print(pd.notna(df))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;df.loc[&amp;#39;a&amp;#39;] &amp;#x3D; np.nan&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;df.loc[&amp;#39;b&amp;#39;,1] &amp;#x3D; np.nan&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;print(df)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;df.dropna(axis&amp;#x3D;0,how&amp;#x3D;&amp;#39;all&amp;#39;,inplace&amp;#x3D;True)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;print(df)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;:hexoPostRenderEscape--&gt;
+</code></pre>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">      0     1     2     3</span><br><span class="line">a   NaN   NaN   NaN   NaN</span><br><span class="line">b   4.0   NaN   6.0   7.0</span><br><span class="line">c   8.0   9.0  10.0  11.0</span><br><span class="line">d  12.0  13.0  14.0  15.0</span><br><span class="line">      0     1     2     3</span><br><span class="line">b   4.0   NaN   6.0   7.0</span><br><span class="line">c   8.0   9.0  10.0  11.0</span><br><span class="line">d  12.0  13.0  14.0  15.0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="补全缺失值-NaN"><a href="#补全缺失值-NaN" class="headerlink" title="补全缺失值(NaN)"></a>补全缺失值(NaN)</h4><ul>
+<li><p><strong>df.fillna(value=None,method=None,axis=None,inplace=False,limit=None)</strong></p>
+</li>
+<li><ul>
+<li>value 标量或字典对象用于填充缺失值</li>
+</ul>
+</li>
+<li><pre><code class="python">import pandas as pd
+import numpy as np
+df = pd.DataFrame(np.arange(16).reshape(4,4),index=[&#39;a&#39;,&#39;b&#39;,&#39;c&#39;,&#39;d&#39;])
+
+df.loc[&#39;a&#39;] = np.nan
+df.loc[&#39;b&#39;,1] = np.nan
+
+df.fillna(value=1,inplace=True)
+print(df)
+&lt;!--hexoPostRenderEscape:&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;- &amp;#96;&amp;#96;&amp;#96;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        0     1     2     3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  a   1.0   1.0   1.0   1.0&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  b   4.0   1.0   6.0   7.0&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  c   8.0   9.0  10.0  11.0&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  d  12.0  13.0  14.0  15.0&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;:hexoPostRenderEscape--&gt;</code></pre>
+</li>
+<li><ul>
+<li>method 插值方法 默认为”ffill”</li>
+</ul>
+</li>
+<li><pre><code class="python">import pandas as pd
+import numpy as np
+df = pd.DataFrame(np.arange(16).reshape(4,4),index=[&#39;a&#39;,&#39;b&#39;,&#39;c&#39;,&#39;d&#39;])
+
+df.loc[&#39;a&#39;] = np.nan
+df.loc[&#39;b&#39;,1] = np.nan
+
+df.fillna(method=&#39;bfill&#39;,inplace=True) #使用bfill进行插值
+print(df)
+&lt;!--hexoPostRenderEscape:&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;- &amp;#96;&amp;#96;&amp;#96;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        0     1     2     3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  a   4.0   9.0   6.0   7.0&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  b   4.0   9.0   6.0   7.0&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  c   8.0   9.0  10.0  11.0&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  d  12.0  13.0  14.0  15.0&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;:hexoPostRenderEscape--&gt;</code></pre>
+</li>
+<li><ul>
+<li>axis 需填充的轴 默认为0</li>
+</ul>
+</li>
+<li><pre><code>import pandas as pd
+import numpy as np
+df = pd.DataFrame(np.arange(16).reshape(4,4),index=[&#39;a&#39;,&#39;b&#39;,&#39;c&#39;,&#39;d&#39;])
+
+df.loc[&#39;a&#39;] = np.nan
+df.loc[&#39;b&#39;,1] = np.nan
+
+df.fillna(method=&#39;bfill&#39;,inplace=True,axis=1) #填充轴为1
+print(df)
+&lt;!--hexoPostRenderEscape:&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;- &amp;#96;&amp;#96;&amp;#96;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        0     1     2     3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  a   NaN   NaN   NaN   NaN&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  b   4.0   6.0   6.0   7.0&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  c   8.0   9.0  10.0  11.0&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  d  12.0  13.0  14.0  15.0&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;:hexoPostRenderEscape--&gt;</code></pre>
+</li>
+<li><ul>
+<li>inplace 修改被调用的对象 而不是一个备份</li>
+<li>limit 用于向前或向后填充时最大的填充范围.</li>
+</ul>
+</li>
+<li><pre><code>import pandas as pd
+import numpy as np
+df = pd.DataFrame(np.arange(16).reshape(4,4),index=[&#39;a&#39;,&#39;b&#39;,&#39;c&#39;,&#39;d&#39;])
+
+df.loc[&#39;a&#39;] = np.nan
+df.loc[&#39;b&#39;,1] = np.nan
+
+df.loc[&#39;c&#39;] = np.nan
+df.fillna(value=2,inplace=True,axis=1,limit=2)
+print(df)
+&lt;!--hexoPostRenderEscape:&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;- &amp;#96;&amp;#96;&amp;#96;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        0     1     2     3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  a   2.0   2.0   2.0   2.0&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  b   4.0   2.0   6.0   7.0&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  c   2.0   NaN   2.0   2.0&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  d  12.0  13.0  14.0  15.0&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;:hexoPostRenderEscape--&gt;</code></pre>
+</li>
+<li></li>
+</ul>
+<h3 id="异常值"><a href="#异常值" class="headerlink" title="异常值"></a>异常值</h3><p>脏数据也包含不符合要求的数据，那么对这块数据处理不能直接使用fillna填充。使用replace更加灵活。</p>
+<ul>
+<li><p><strong>df.replace(to_replace=None,value=None)</strong></p>
+</li>
+<li><ul>
+<li>to_replace 去替换的值</li>
+<li>value 替换的值</li>
+</ul>
+</li>
+<li><pre><code>import pandas as pd
+import numpy as np
+df = pd.DataFrame(np.arange(16).reshape(4,4),index=[&#39;a&#39;,&#39;b&#39;,&#39;c&#39;,&#39;d&#39;])
+
+df.loc[&#39;a&#39;] = np.nan
+df.loc[&#39;b&#39;,1] = np.nan
+
+df.replace(to_replace=df.loc[&#39;c&#39;,2],value=5,inplace=True) #将c,2替换为5
+print(df)
+&lt;!--hexoPostRenderEscape:&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;- &amp;#96;&amp;#96;&amp;#96;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        0     1     2     3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  a   NaN   NaN   NaN   NaN&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  b   4.0   NaN   6.0   7.0&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  c   8.0   9.0   5.0  11.0&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  d  12.0  13.0  14.0  15.0&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;:hexoPostRenderEscape--&gt;</code></pre>
+</li>
+<li></li>
+</ul>
+<h3 id="处理重复数据"><a href="#处理重复数据" class="headerlink" title="处理重复数据"></a>处理重复数据</h3><h4 id="判断重复值"><a href="#判断重复值" class="headerlink" title="判断重复值"></a>判断重复值</h4><ul>
+<li><p><strong>df.duplicated(subset=None, keep=’first’)</strong>   返回的一个布尔值Series  默认反映的是每一行是否与之前出现过的行相同</p>
+</li>
+<li><ul>
+<li>subset 指定子列判断重复</li>
+<li>keep  默认为first保留首个出现的  last保留最后出现的 </li>
+</ul>
+</li>
+<li><pre><code class="python">import pandas as pd
+import numpy as np
+df = pd.DataFrame(np.arange(16).reshape(4,4),index=[&#39;a&#39;,&#39;b&#39;,&#39;c&#39;,&#39;d&#39;])
+
+df.loc[&#39;b&#39;] = df.loc[&#39;a&#39;]
+print(df.duplicated(keep=&#39;last&#39;))
+&lt;!--hexoPostRenderEscape:&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;- &amp;#96;&amp;#96;&amp;#96;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  a     True&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  b    False&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  c    False&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  d    False&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  dtype: bool&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;:hexoPostRenderEscape--&gt;</code></pre>
+</li>
+<li></li>
+</ul>
+<h4 id="删除重复值"><a href="#删除重复值" class="headerlink" title="删除重复值"></a>删除重复值</h4><ul>
+<li><p><strong>df.drop_duplicates()</strong>                     返回的是DataFrame 默认删除重复行</p>
+</li>
+<li><ul>
+<li>subset  指定的数据任何子集是否有重复</li>
+<li>keep   默认为first保留首个出现的  last保留最后出现的</li>
+</ul>
+</li>
+<li><pre><code class="python">import pandas as pd
+import numpy as np
+df = pd.DataFrame(np.arange(16).reshape(4,4),index=[&#39;a&#39;,&#39;b&#39;,&#39;c&#39;,&#39;d&#39;])
+
+# df.loc[&#39;a&#39;,2] = 1
+df.loc[&#39;b&#39;] = df.loc[&#39;a&#39;]
+# print(df)
+# print(df.duplicated(keep=&#39;last&#39;))
+df.drop_duplicates(keep=&#39;last&#39;,inplace=True)
+print(df)
+&lt;!--hexoPostRenderEscape:&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;- &amp;#96;&amp;#96;&amp;#96;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      0   1   2   3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  b   0   1   2   3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  c   8   9  10  11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  d  12  13  14  15&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;:hexoPostRenderEscape--&gt;</code></pre>
+</li>
+<li></li>
+</ul>
+<h3 id="离散化"><a href="#离散化" class="headerlink" title="离散化"></a>离散化</h3><p>离散化是把无限空间中有限的个体映射到有限的空间中去，以此提高算法的时空效率。</p>
+<p>可以简单的理解为<strong>离散化就是将连续值进行分区间</strong>。</p>
+<ul>
+<li><p><strong>pd.cut(x,bins)</strong>                 将连续数据x进行离散化</p>
+</li>
+<li><ul>
+<li>x       要进行离散化的数据</li>
+<li>bins    分组</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">age_arree = np.random.randint(<span class="number">20</span>,<span class="number">60</span>,size=<span class="number">20</span>)</span><br><span class="line">bins = <span class="number">5</span>  <span class="comment">#bins可以传递一个列表 </span></span><br><span class="line">cates = pd.cut(age_arree,bins)</span><br><span class="line">print(cates)        <span class="comment">#返回组</span></span><br><span class="line">print(cates.codes)  <span class="comment">#返回索引</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[(51.6, 59.0], (44.2, 51.6], (51.6, 59.0], (51.6, 59.0], (44.2, 51.6], ..., (29.4, 36.8], (21.963, 29.4], (29.4, 36.8], (36.8, 44.2], (29.4, 36.8]]</span><br><span class="line">Length: 20</span><br><span class="line">Categories (5, interval[float64]): [(21.963, 29.4] &lt; (29.4, 36.8] &lt; (36.8, 44.2] &lt; (44.2, 51.6] &lt;(51.6, 59.0]]</span><br><span class="line">[4 3 4 4 3 4 1 3 0 2 1 4 4 4 0 1 0 1 2 1]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>pd.value_counts(cates)</strong>          统计每个区间的数值分布</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line">age_arree &#x3D; np.random.randint(20,60,size&#x3D;20)</span><br><span class="line">bins &#x3D; 5</span><br><span class="line">cates &#x3D; pd.cut(age_arree,bins)</span><br><span class="line"> </span><br><span class="line">print(cates.categories)   #返回区间</span><br><span class="line">a &#x3D; pd.value_counts(cates)  #返回区间数值分布</span><br><span class="line">print(a)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">IntervalIndex([(21.963, 29.4], (29.4, 36.8], (36.8, 44.2], (44.2, 51.6], (51.6, 59.0]],</span><br><span class="line">              closed&#x3D;&#39;right&#39;,</span><br><span class="line">              dtype&#x3D;&#39;interval[float64]&#39;)</span><br><span class="line">(51.6, 59.0]      7</span><br><span class="line">(29.4, 36.8]      5</span><br><span class="line">(44.2, 51.6]      3</span><br><span class="line">(21.963, 29.4]    3</span><br><span class="line">(36.8, 44.2]      2</span><br><span class="line">dtype: int64</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="重命名轴索引"><a href="#重命名轴索引" class="headerlink" title="重命名轴索引"></a>重命名轴索引</h3><p>需求：如下数据，将行索引名字全部转为大写</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">data &#x3D; &#123;</span><br><span class="line">    &quot;names&quot;:[&quot;bob&quot;,&quot;amy&quot;,&quot;cheney&quot;,&quot;jerry&quot;],</span><br><span class="line">    &quot;grades&quot;:np.random.randint(60,100,size&#x3D;4)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">df2 &#x3D; pd.DataFrame(np.random.randint(60,100,size&#x3D;(4,2)),index&#x3D;[&quot;bob&quot;,&quot;amy&quot;,&quot;cheney&quot;,&quot;jerry&quot;])</span><br><span class="line">df2</span><br></pre></td></tr></table></figure>
+
+<p>使用：</p>
+<ul>
+<li>索引映射：df.index.map()</li>
+<li>索引重命名：df.rename(index,columns) </li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">df2 = pd.DataFrame(np.random.randint(<span class="number">60</span>,<span class="number">100</span>,size=(<span class="number">4</span>,<span class="number">2</span>)),index=[<span class="string">&quot;bob&quot;</span>,<span class="string">&quot;amy&quot;</span>,<span class="string">&quot;cheney&quot;</span>,<span class="string">&quot;jerry&quot;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># print(df2)</span></span><br><span class="line">f = <span class="keyword">lambda</span> x:x.upper()</span><br><span class="line">df2.index.map(f)</span><br><span class="line">print(df2.index.map(f))</span><br><span class="line"></span><br><span class="line">print(df2.rename(index=str.upper))</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="向量化字符串函数"><a href="#向量化字符串函数" class="headerlink" title="向量化字符串函数"></a>向量化字符串函数</h3><p><img src= "/img/loading.gif" data-lazy-src="https://cdn.nlark.com/yuque/0/2020/png/704747/1599302817249-d765653a-85e2-4250-9fea-469f2023b781.png" alt="import33.png"></p>
+<h3 id="计算虚拟变量"><a href="#计算虚拟变量" class="headerlink" title="计算虚拟变量"></a>计算虚拟变量</h3><p>将<strong>分类变量转换为”虚拟”或”指标”矩阵</strong>是另一种用于统计建模或机器学习的转换操作。如果DataFrame中的一列有k个不同的值，则可以衍生一个K列的值为1和0的矩阵或DataFrame。</p>
+<ul>
+<li><strong>pd.get_dummies()</strong>              将分类变量转换为”虚拟”或”指标”矩阵 </li>
+</ul>
+<p>但是，如果说DataFrame中的一行属于多个类别，情况就会比较复杂。如下图</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://cdn.nlark.com/yuque/0/2020/png/704747/1599303078982-62f01862-393e-49a9-904c-7e78a8285962.png" alt="image.png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">df1=pd.DataFrame(</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;key&#x27;</span>:[<span class="string">&#x27;b&#x27;</span>,<span class="string">&#x27;b&#x27;</span>,<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;c&#x27;</span>,<span class="string">&#x27;c&#x27;</span>,<span class="string">&#x27;b&#x27;</span>],</span><br><span class="line">        <span class="string">&#x27;data&#x27;</span>:range(<span class="number">6</span>)</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br><span class="line">print(df1)</span><br><span class="line">print(pd.get_dummies(df1[<span class="string">&#x27;key&#x27;</span>]))</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">  key  data</span><br><span class="line">0   b     0</span><br><span class="line">1   b     1</span><br><span class="line">2   a     2</span><br><span class="line">3   c     3</span><br><span class="line">4   c     4</span><br><span class="line">5   b     5</span><br><span class="line">   a  b  c</span><br><span class="line">0  0  1  0</span><br><span class="line">1  0  1  0</span><br><span class="line">2  1  0  0</span><br><span class="line">3  0  0  1</span><br><span class="line">4  0  0  1</span><br><span class="line">5  0  1  0</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>IMDB Movie 数据清洗</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">df = pd.read_csv(<span class="string">&#x27;IMDB-Movie-Data.csv&#x27;</span>)</span><br><span class="line"><span class="comment"># print(r.head())</span></span><br><span class="line"></span><br><span class="line">genre = []</span><br><span class="line"><span class="keyword">for</span> gen <span class="keyword">in</span> df.Genre:</span><br><span class="line">    genre.extend(gen.split(<span class="string">&#x27;,&#x27;</span>))</span><br><span class="line"></span><br><span class="line">agenre = pd.unique(genre)</span><br><span class="line"><span class="comment"># print(agenre)</span></span><br><span class="line">zero_arr = pd.DataFrame(np.zeros((len(df),len(agenre))),columns=agenre)</span><br><span class="line"><span class="comment"># print(zero_arr)</span></span><br><span class="line"><span class="keyword">for</span> index,genres <span class="keyword">in</span> enumerate(df.Genre):</span><br><span class="line">    indice = zero_arr.columns.get_indexer(genres.split(<span class="string">&#x27;,&#x27;</span>))</span><br><span class="line">    zero_arr.iloc[index,indice] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">print(zero_arr.head())</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">   Action  Adventure  Sci-Fi  Mystery  ...  Western  War  Musical  Sport</span><br><span class="line">0     1.0        1.0     1.0      0.0  ...      0.0  0.0      0.0    0.0</span><br><span class="line">1     0.0        1.0     1.0      1.0  ...      0.0  0.0      0.0    0.0</span><br><span class="line">2     0.0        0.0     0.0      0.0  ...      0.0  0.0      0.0    0.0</span><br><span class="line">3     0.0        0.0     0.0      0.0  ...      0.0  0.0      0.0    0.0</span><br><span class="line">4     1.0        1.0     0.0      0.0  ...      0.0  0.0      0.0    0.0</span><br><span class="line"></span><br><span class="line">[5 rows x 20 columns]</span><br></pre></td></tr></table></figure>
+
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">三三不得酒吖</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://yinshaoxuan.github.io/2021/03/21/shujuqingxi/">https://yinshaoxuan.github.io/2021/03/21/shujuqingxi/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://yinshaoxuan.github.io" target="_blank">斯人若彩虹，遇上方知有</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Python%E5%AD%A6%E4%B9%A0/">Python学习</a><a class="post-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a><a class="post-meta__tags" href="/tags/Pandas/">Pandas</a></div><div class="post_share"><div class="social-share" data-image="https://s1.ax1x.com/2020/08/11/aO5rBq.jpg" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/03/22/shujuguizheng/"><img class="prev-cover" data-lazy-src="https://s1.ax1x.com/2020/08/11/aO5rBq.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">数据规整</div></div></a></div><div class="next-post pull-right"><a href="/2021/01/27/pandaswork2/"><img class="next-cover" data-lazy-src="https://s1.ax1x.com/2020/08/11/aO5rBq.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">pandaswork2</div></div></a></div></nav><div class="relatedPosts"><div class="relatedPosts_headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts_list"><div class="relatedPosts_item"><a href="/2021/03/23/datatime/" title="时间序列"><img class="relatedPosts_cover" data-lazy-src="https://s1.ax1x.com/2020/08/11/aO5rBq.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-23</div><div class="relatedPosts_title">时间序列</div></div></a></div><div class="relatedPosts_item"><a href="/2021/01/25/pandas/" title="pandas"><img class="relatedPosts_cover" data-lazy-src="https://s1.ax1x.com/2020/08/11/aO5rBq.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2021-01-25</div><div class="relatedPosts_title">pandas</div></div></a></div><div class="relatedPosts_item"><a href="/2021/03/22/shujuguizheng/" title="数据规整"><img class="relatedPosts_cover" data-lazy-src="https://s1.ax1x.com/2020/08/11/aO5rBq.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-22</div><div class="relatedPosts_title">数据规整</div></div></a></div><div class="relatedPosts_item"><a href="/2021/01/25/matplotlib/" title="matplotlib"><img class="relatedPosts_cover" data-lazy-src="https://s1.ax1x.com/2020/08/11/aO5rBq.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2021-01-25</div><div class="relatedPosts_title">matplotlib</div></div></a></div><div class="relatedPosts_item"><a href="/2021/01/25/numpy/" title="numpy"><img class="relatedPosts_cover" data-lazy-src="https://s1.ax1x.com/2020/08/11/aO5rBq.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2021-01-25</div><div class="relatedPosts_title">numpy</div></div></a></div><div class="relatedPosts_item"><a href="/2021/01/27/pandaswork2/" title="pandaswork2"><img class="relatedPosts_cover" data-lazy-src="https://s1.ax1x.com/2020/08/11/aO5rBq.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2021-01-27</div><div class="relatedPosts_title">pandaswork2</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></article></main><footer id="footer" style="background-image: url(https://s1.ax1x.com/2020/08/11/aO5rBq.jpg)" data-type="photo"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By 三三不得酒吖</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font_plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font_minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module" defer></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js" async></script><script>var endLoading = function () {
+  document.body.style.overflow = 'auto';
+  document.getElementById('loading-box').classList.add("loaded")
+}
+window.addEventListener('load',endLoading)</script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    window.valine = new Valine({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+    });
+    if ('nick,mail') { valine.config.requiredFields= 'nick,mail'.split(',') }
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else $.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) loadComment(document.querySelector('#vcomment'),loadValine)
+  else setTimeout(() => loadValine(), 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><canvas class="fireworks"></canvas><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="/js/third-party/fireworks.js"></script></div></body></html>
